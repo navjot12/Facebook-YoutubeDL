@@ -69,10 +69,10 @@ class MyChatBotView(generic.View):
 
 					else:
 						command1 = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
-						#os.system(command1)
+						os.system(command1)
 						message_text = 'Please wait while we fetch the audio file for you. Command: ' + command1
 						#sendAudio(fbid, title+'.mp3')
-						#os.system('rm '+title+'.mp3')
+						os.system('rm '+title+'.mp3')
 
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
