@@ -11,7 +11,6 @@ import json
 import sys
 import os
 import time
-import telepot
 import requests
 from bs4 import BeautifulSoup as BS
 
