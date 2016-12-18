@@ -50,8 +50,8 @@ class MyChatBotView(generic.View):
 					
 					words = message_text.split(' ')
 					flag_URL = 0
-					title = ''
-					url = ''
+					title = '_'
+					url = '_'
 					for text in words:
 						if text.startswith('https://') or text.startswith('www.') or text.startswith('youtu'):
 							url = text
@@ -68,9 +68,9 @@ class MyChatBotView(generic.View):
 						message_text = 'Please enter a video link to download.'
 					
 					else:
-					    #cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
-						#os.system(cmd)
-						message_text = 'Please wait while we fetch the audio file for you. Title: ' + title
+					    command1 = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
+						#os.system(command1)
+						message_text = 'Please wait while we fetch the audio file for you. Command: ' + command1
 						#sendAudio(fbid, title+'.mp3')
 						#os.system('rm '+title+'.mp3')
 
