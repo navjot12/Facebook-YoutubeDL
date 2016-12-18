@@ -31,11 +31,11 @@ PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBAFNtQwyXBAgswtxV9wVMQMoUO887BT4dE8qFykRoyqEfto
 
 def post_facebook_quickreply(fbid, url):
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
-	print '-----REACHED HERE-----'
 	response_msg_quickreply = {
+		"setting_type" : "call_to_actions",
 		"recipient":{
 		    "id":fbid
-		  },
+		},
 		"message":{
 			"text":"What would you like to download?",
 		    "quick_replies":[
@@ -53,7 +53,6 @@ def post_facebook_quickreply(fbid, url):
 		}
 	}
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
-	print '-----AND REACHED HERE-----'
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
 
