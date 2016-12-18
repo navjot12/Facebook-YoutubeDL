@@ -33,6 +33,7 @@ def post_facebook_quickreply(fbid, url):
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg_quickreply = {
 		"setting_type" : "call_to_actions",
+		"thread_state":"new_thread",
 		"recipient":{
 		    "id":fbid
 		},
