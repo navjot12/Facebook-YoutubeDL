@@ -118,10 +118,10 @@ class MyChatBotView(generic.View):
 						message_text = video.title + '\t(' + video.duration + ')'
 						post_facebook_message(sender_id,message_text)
 						if flag_VIDEO == 1:
-							post_facebook_video(sender_id, best.url)
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
+							post_facebook_video(sender_id, best.url)
 						else:
 							bestaudio = video.getbestaudio(preftype="m4a")
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
