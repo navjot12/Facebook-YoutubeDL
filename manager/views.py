@@ -35,9 +35,6 @@ def post_facebook_quickreply(fbid, url):
 		"setting_type" : "call_to_actions",
 		"thread_state":"new_thread",
 		"call_to_actions":[{
-			"recipient":{
-			    "id":fbid
-			},
 			"message":{
 				"text":"What would you like to download?",
 			    "quick_replies":[
