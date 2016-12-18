@@ -61,7 +61,7 @@ class MyChatBotView(generic.View):
 					if flag_URL == 0:
 						message_text = 'Please enter a video link to download.'
 
-					'''else:
+					else:
 						video = pafy.new(url)
 						best = video.getbest()
 						message_text = video.title + '\t(' + video.duration + ')'
@@ -69,16 +69,18 @@ class MyChatBotView(generic.View):
 						
 						if flag_VIDEO == 1:
 						    r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
-						    message_text = 'Download Video: ' + str(r.text)
-						    post_facebook_message(sender_id,message_text)
+						    message_text = message_text + '\n\nDownload Video: ' + str(r.text)
+						    #post_facebook_message(sender_id,message_text)
 
 						else :
 							bestaudio = video.getbestaudio(preftype="m4a")
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-							message_text = 'Download Audio: ' + str(r.text)
-							post_facebook_message(sender_id,message_text)
-							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
-							post_facebook_message(sender_id,message_text)'''
+							message_text = message_text + '\n\nDownload Audio: ' + str(r.text)
+							#post_facebook_message(sender_id,message_text)
+							message_text = message_text + '\n\nIMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
+							#post_facebook_message(sender_id,message_text)
+
+					post_facebook_message(sender_id,message_text)
 						    
 				except Exception as e:
 					print e
