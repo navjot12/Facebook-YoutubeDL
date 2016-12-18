@@ -24,7 +24,7 @@ def set_greeting_text():
 			"text":"This chatbot allows you to download youtube videos in the best quality!\nJust paste the url of a youtube video to download it's audio. Or enter \"<video url> video\" to download the video."
 		}
 	}
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quikreply)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status
 
 def post_facebook_message(fbid, message_text):
@@ -51,6 +51,26 @@ def post_facebook_audio(fbid, message_text):
 	}
 	response_msg_audio = json.dumps(response_msg_audio)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
+	print status
+
+def post_facebook_file(fbid, message_text):
+	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+
+	response_msg_file = {
+		"recipient":{
+			"id":fbid
+		},
+		"message":{
+			"attachment":{
+				"type":"file",
+				"payload":{
+					"url":"https://petersapparel.com/bin/receipt.pdf"
+				}
+			}
+		}
+	}
+	response_msg_file = json.dumps(response_msg_file)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
 
 '''def post_facebook_video(fbid, message_text):
@@ -120,6 +140,7 @@ class MyChatBotView(generic.View):
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
 							#post_facebook_video(sender_id, best.url)
+							post_facebook_file(sender_id, best.url)
 						else:
 							bestaudio = video.getbestaudio(preftype="m4a")
 							post_facebook_audio(sender_id, bestaudio.url)
@@ -128,6 +149,7 @@ class MyChatBotView(generic.View):
 							post_facebook_message(sender_id,message_text)
 							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
 							post_facebook_message(sender_id,message_text)
+							post_facebook_file(sender_id, bestaudio.url)
 
 				except Exception as e:
 					print e
