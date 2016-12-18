@@ -8,9 +8,6 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 import json
-import sys
-import time
-import telepot
 import requests
 
 VERIFY_TOKEN = 'youtube-download-karega'
@@ -28,7 +25,7 @@ class MyChatBotView(generic.View):
 		if self.request.GET['hub.verify_token'] == VERIFY_TOKEN:
 			return HttpResponse(self.request.GET['hub.challenge'])
 		else:
-			return HttpResponse('Invalid token.')
+			return HttpResponse('Oops invalid token')
 
 	@method_decorator(csrf_exempt)
 	def dispatch(self, request, *args, **kwargs):
