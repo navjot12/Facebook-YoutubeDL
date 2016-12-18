@@ -54,7 +54,7 @@ def post_facebook_quickreply(fbid, url):
 			    ]
 			}
 		]
-	}
+	]
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
