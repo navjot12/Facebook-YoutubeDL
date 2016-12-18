@@ -34,7 +34,7 @@ def post_facebook_quickreply(fbid, url):
 	response_msg_quickreply = {
 		"setting_type" : "call_to_actions",
 		"thread_state":"new_thread",
-		"call_to_actions":[
+		"call_to_actions":[{
 			"recipient":{
 			    "id":fbid
 			},
@@ -53,8 +53,8 @@ def post_facebook_quickreply(fbid, url):
 			    }
 			    ]
 			}
-		]
-	]
+		}]
+	}
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
