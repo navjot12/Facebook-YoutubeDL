@@ -67,8 +67,17 @@ class MyChatBotView(generic.View):
 						post_facebook_message(sender_id,message_text)
 						if flag_VIDEO == 1:
 							message_text = 'Will download video'
+							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
+							message_text = 'Download Video: ' + str(r.text)
+							post_facebook_message(sender_id,message_text)
 						else:
 							message_text = 'Will download audio'
+							bestaudio = video.getbestaudio(preftype="m4a")
+							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+							message_text = 'Download Audio: ' + str(r.text)
+							post_facebook_message(sender_id,message_text)
+							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
+							post_facebook_message(sender_id,message_text)
 					
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
