@@ -79,7 +79,7 @@ class MyChatBotView(generic.View):
 							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
 							post_facebook_message(sender_id,message_text)
 					
-					post_facebook_message(sender_id,message_text) 
+					#post_facebook_message(sender_id,message_text) 
 				except Exception as e:
 					print e
 					pass
