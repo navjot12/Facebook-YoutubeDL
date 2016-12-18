@@ -1,3 +1,8 @@
 Django==1.7
 gunicorn==19.6.0
-requests
+beautifulsoup4==4.5.1
+bs4==0.0.1
+requests==2.12.4
+telepot==10.2
+urllib3==1.19.1
+youtube-dl==2016.12.12
