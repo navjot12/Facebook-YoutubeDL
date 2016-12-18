@@ -53,7 +53,15 @@ class MyChatBotView(generic.View):
 					title = ''
 					for text in words:
 						if text.startswith('https://') or text.startswith('www.') or text.startswith('youtu'):
-							message_text = 'Youtube URL detected!'
+							url = text
+							r = requests.get(url)
+							soup=BS(r.text, "html.parser")
+							title = soup.title.string
+							title = title.split(' - YouTube')[0]
+							title = title.split('|')[0].split('(')[0].split('.')[0].strip()
+							title = title.replace(' ', '_').replace('\'', '')
+							message_text = title
+							flag_URL = 1
 
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
