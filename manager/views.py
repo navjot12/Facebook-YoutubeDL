@@ -46,11 +46,12 @@ class MyChatBotView(generic.View):
 				print message
 				try:
 					sender_id = message['sender']['id']
-					message_text = str(message['message']['text'])
-
+					message_text = message['message']['text']
+					
+					words = message_text.split(' ')
 					flag_URL = 0
 					title = ''
-					for text in message_text:
+					for text in words:
 						if text.startswith('https://') or text.startswith('www.') or text.startswith('youtu'):
 							message_text = 'Youtube URL detected!'
 
