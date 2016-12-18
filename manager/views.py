@@ -63,7 +63,7 @@ def handle_quickreply(fbid, payload):
 	message_text = video.title + '\t(' + video.duration + ')'
 	post_facebook_message(sender_id,message_text)
 	
-	if payload.split(':')][0] == 'Video':
+	if payload.split(':')[0] == 'Video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
@@ -72,7 +72,7 @@ def handle_quickreply(fbid, payload):
 		#post_facebook_video(sender_id, best.url)
 		post_facebook_file(sender_id, best.url)
 	
-	elif payload.split(':')][0] == 'Audio':
+	elif payload.split(':')[0] == 'Audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 		post_facebook_audio(sender_id, bestaudio.url)
