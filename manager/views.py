@@ -56,7 +56,7 @@ class MyChatBotView(generic.View):
 							flag_URL = 1
 						elif word.lower().startswith('video'):
 							flag_VIDEO = 1
-					'''
+					
 					if flag_URL == 0:
 						message_text = 'Please enter a valid video link to download.'
 
@@ -65,7 +65,7 @@ class MyChatBotView(generic.View):
 							message_text = 'Will download video'
 						else:
 							message_text = 'Will download audio'
-					'''
+					
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
 					print e
