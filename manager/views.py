@@ -61,6 +61,10 @@ class MyChatBotView(generic.View):
 						message_text = 'Please enter a valid video link to download.'
 
 					else:
+						video = pafy.new(url)
+						best = video.getbest()
+						message_text = video.title + '\t(' + video.duration + ')'
+						post_facebook_message(sender_id,message_text)
 						if flag_VIDEO == 1:
 							message_text = 'Will download video'
 						else:
