@@ -16,7 +16,7 @@ import pafy
 VERIFY_TOKEN = 'youtube-download-karega'
 PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBAFNtQwyXBAgswtxV9wVMQMoUO887BT4dE8qFykRoyqEftoe2GHJe35HuLHL8ZAPmWWoW4evqBTO6cYUdFO7CYqKtyBLXvMrIxApNQe5iZBRmC3S6g0HEZBKOwzZAG0OXSrcZBGMcBlEHtKO57ownY3cDvAYMevwZDZD'
 
-def set_greeting_text():
+'''def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg = {
 		"setting_type":"greeting",
@@ -27,8 +27,9 @@ def set_greeting_text():
 	response_msg = json.dumps(response_msg)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status
+'''
 
-def post_facebook_quickreply(fbid, message_text):
+def post_facebook_quickreply(fbid, url):
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg_quickreply = {
 		"recipient":{
@@ -40,12 +41,12 @@ def post_facebook_quickreply(fbid, message_text):
 		    {
 		    	"content_type":"text",
 		        "title":'Audio',
-		        "payload":'Audio :' + message_text
+		        "payload":'Audio :' + url
 		    },
 		    {
 			    "content_type":"text",
 		    	"title":'Video',
-		    	"payload":'Video :' + message_text
+		    	"payload":'Video :' + url
 		    }
 		    ]
 		}
@@ -181,19 +182,15 @@ class MyChatBotView(generic.View):
 
 					words = message_text.split(' ')
 					flag_URL = 0
-					url = '_'
 
 					for word in words:
 						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
-							url = word
+							post_facebook_quickreply(sender_id, word)
 							flag_URL = 1
 
 					if flag_URL == 0:
 						message_text = 'Please enter a valid video link to download.'
 						post_facebook_message(sender_id, message_text)
-
-					else:
-						post_facebook_quickreply(sender_id, url)
 
 				except Exception as e:
 					print e
@@ -202,5 +199,5 @@ class MyChatBotView(generic.View):
 		return HttpResponse()
 
 def index(request):
-	set_greeting_text()
+	#set_greeting_text()
 	return HttpResponse('Building Youtube Downloader Bot!')
