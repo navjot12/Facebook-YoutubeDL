@@ -90,6 +90,7 @@ class MyChatBotView(generic.View):
 					
 					if flag_URL == 0:
 						message_text = 'Please enter a valid video link to download.'
+						post_facebook_message(sender_id, message_text)
 
 					else:
 						video = pafy.new(url)
@@ -97,12 +98,10 @@ class MyChatBotView(generic.View):
 						message_text = video.title + '\t(' + video.duration + ')'
 						post_facebook_message(sender_id,message_text)
 						if flag_VIDEO == 1:
-							message_text = 'Will download video'
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
 						else:
-							message_text = 'Will download audio'
 							bestaudio = video.getbestaudio(preftype="m4a")
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 							message_text = 'Download Audio: ' + str(r.text)
