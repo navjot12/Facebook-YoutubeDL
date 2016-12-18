@@ -44,11 +44,12 @@ class MyChatBotView(generic.View):
 				try:
 					sender_id = message['sender']['id']
 					message_text = message['message']['text']
-					'''
+
 					words = message_text.split(' ')
 					flag_URL = 0
 					flag_VIDEO = 0
 					url = '_'
+					'''
 					for word in words:
 						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
 							url = word
