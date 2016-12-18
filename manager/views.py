@@ -119,11 +119,11 @@ class MyChatBotView(generic.View):
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
-							post_facebook_video(sender_id, best.url)
+							post_facebook_video(sender_id, str(r.text))
 						else:
 							bestaudio = video.getbestaudio(preftype="m4a")
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-							post_facebook_audio(sender_id, bestaudio.url)
+							post_facebook_audio(sender_id, str(r.text))
 							message_text = 'Download Audio: ' + str(r.text)
 							post_facebook_message(sender_id,message_text)
 							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
