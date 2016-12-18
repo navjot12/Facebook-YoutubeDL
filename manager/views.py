@@ -10,7 +10,6 @@ from django.utils.decorators import method_decorator
 import json
 import sys
 import time
-import telepot
 import requests
 import pafy
 
