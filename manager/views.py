@@ -34,24 +34,26 @@ def post_facebook_quickreply(fbid, url):
 	response_msg_quickreply = {
 		"setting_type" : "call_to_actions",
 		"thread_state":"new_thread",
-		"recipient":{
-		    "id":fbid
-		},
-		"message":{
-			"text":"What would you like to download?",
-		    "quick_replies":[
-		    {
-		    	"content_type":"text",
-		        "title":'Audio',
-		        "payload":'Audio :' + url
-		    },
-		    {
-			    "content_type":"text",
-		    	"title":'Video',
-		    	"payload":'Video :' + url
-		    }
-		    ]
-		}
+		"call_to_actions":[
+			"recipient":{
+			    "id":fbid
+			},
+			"message":{
+				"text":"What would you like to download?",
+			    "quick_replies":[
+			    {
+			    	"content_type":"text",
+			        "title":'Audio',
+			        "payload":'Audio :' + url
+			    },
+			    {
+				    "content_type":"text",
+			    	"title":'Video',
+			    	"payload":'Video :' + url
+			    }
+			    ]
+			}
+		]
 	}
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
