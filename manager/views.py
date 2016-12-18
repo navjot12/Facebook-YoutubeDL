@@ -45,7 +45,7 @@ class MyChatBotView(generic.View):
 				try:
 					sender_id = message['sender']['id']
 					message_text = message['message']['text']
-					
+					'''
 					words = message_text.split(' ')
 					flag_URL = 0
 					flag_VIDEO = 0
@@ -56,7 +56,7 @@ class MyChatBotView(generic.View):
 							flag_URL = 1
 						elif word.lower().startswith('video'):
 							flag_VIDEO = 1
-					'''
+					
 					if flag_URL == 0:
 						message_text = 'Please enter a valid video link to download.'
 
