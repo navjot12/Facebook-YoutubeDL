@@ -66,9 +66,9 @@ class MyChatBotView(generic.View):
 					
 					if flag_URL == 0:
 						message_text = 'Please enter a video link to download.'
-					
+
 					else:
-					    command1 = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
+						command1 = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
 						#os.system(command1)
 						message_text = 'Please wait while we fetch the audio file for you. Command: ' + command1
 						#sendAudio(fbid, title+'.mp3')
