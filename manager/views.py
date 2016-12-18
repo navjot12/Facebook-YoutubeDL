@@ -53,26 +53,6 @@ def post_facebook_audio(fbid, message_text):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-def post_facebook_video(fbid, message_text):
-	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
-
-	response_msg_video = {
-		"recipient":{
-			"id":fbid
-		},
-		"message":{
-			"attachment":{
-		    	"type":"video",
-		    	"payload":{
-		        	"url":message_text
-		      	}
-		    }
-		}
-	}
-	response_msg_video = json.dumps(response_msg_video)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_video)
-	print status
-
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
@@ -121,13 +101,12 @@ class MyChatBotView(generic.View):
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
-							post_facebook_video(sender_id, best.url)
 						else:
 							bestaudio = video.getbestaudio(preftype="m4a")
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-							post_facebook_audio(sender_id, bestaudio.url)
 							message_text = 'Download Audio: ' + str(r.text)
 							post_facebook_message(sender_id,message_text)
+							post_facebook_audio(sender_id, bestaudio.url)
 							message_text = 'IMPORTANT: After downloading, rename the file to (anyname).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
 							post_facebook_message(sender_id,message_text)
 
