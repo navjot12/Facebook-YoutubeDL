@@ -63,7 +63,7 @@ def post_facebook_video(fbid, message_text):
 			"attachment":{
 				"type":"video",
 				"payload":{
-					"url":"https://petersapparel.com/bin/clip.mp4"
+					"url":message_text
 				}
 			}
 		}
@@ -119,7 +119,7 @@ class MyChatBotView(generic.View):
 							r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 							message_text = 'Download Video: ' + str(r.text)
 							post_facebook_message(sender_id, message_text)
-							post_facebook_audio(sender_id, best.url)
+							post_facebook_video(sender_id, best.url)
 						else:
 							bestaudio = video.getbestaudio(preftype="m4a")
 							post_facebook_audio(sender_id, bestaudio.url)
