@@ -49,14 +49,14 @@ class MyChatBotView(generic.View):
 					flag_URL = 0
 					flag_VIDEO = 0
 					url = '_'
-					'''
+
 					for word in words:
 						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
 							url = word
 							flag_URL = 1
 						elif word.lower().startswith('video'):
 							flag_VIDEO = 1
-					
+					'''
 					if flag_URL == 0:
 						message_text = 'Please enter a valid video link to download.'
 
