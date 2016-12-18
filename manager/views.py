@@ -24,8 +24,6 @@ def post_facebook_message(fbid, message_text):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
 	print status.json()
 
-def sendAudio(fbid, file_name):
-	pass
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
@@ -48,31 +46,8 @@ class MyChatBotView(generic.View):
 				try:
 					sender_id = message['sender']['id']
 					message_text = message['message']['text']
-
-					for text in message_text:
-						if text.startswith('https://') or text.startswith('www.') or text.startswith('youtu'):
-							url = text
-							r = requests.get(url)
-							soup=BS(r.text, "html.parser")
-							title = soup.title.string
-							title = title.split(' - YouTube')[0]
-							title = title.split('|')[0].split('(')[0].split('.')[0].strip()
-							title = title.replace(' ', '_').replace('\'', '')
-							print title
-							flag_URL = 1
-
-					if flag_URL == 0:
-						post_facebook_message(sender_id, 'Please enter a video link to download.')
-
-					else :
-					    cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
-						os.system(cmd)
-						post_facebook_message(sender_id, 'Please wait while we fetch the audio file for you.')
-						sendAudio(fbid, title+'.mp3')
-						os.system('rm '+title+'.mp3')
-					#post_facebook_message(sender_id,message_text) 
+					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
-					post_facebook_message(sender_id, 'Some error has occured.')
 					print e
 					pass
 
