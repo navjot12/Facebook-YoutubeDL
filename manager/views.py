@@ -45,27 +45,6 @@ class MyChatBotView(generic.View):
 				try:
 					sender_id = message['sender']['id']
 					message_text = message['message']['text']
-					'''
-					words = message_text.split(' ')
-					flag_URL = 0
-					flag_VIDEO = 0
-					url = '_'
-					for word in words:
-						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
-							url = word
-							flag_URL = 1
-						elif word.lower().startswith('video'):
-							flag_VIDEO = 1
-					
-					if flag_URL == 0:
-						message_text = 'Please enter a valid video link to download.'
-
-					else:
-						if flag_VIDEO == 1:
-							message_text = 'Will download video'
-						else:
-							message_text = 'Will download audio'
-					'''
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
 					print e
