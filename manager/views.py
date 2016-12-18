@@ -51,10 +51,10 @@ class MyChatBotView(generic.View):
 					flag_VIDEO = 0
 					url = '_'
 					for word in words:
-						if text.startswith('https://') or text.startswith('www.') or text.startswith('youtu'):
+						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
 							url = word
 							flag_URL = 1
-						elif text.lower().startswith('video'):
+						elif word.lower().startswith('video'):
 							flag_VIDEO = 1
 
 					if flag_URL == 0:
@@ -65,7 +65,7 @@ class MyChatBotView(generic.View):
 							message_text = 'Will download video'
 						else:
 							message_text = 'Will download audio'
-							
+
 					post_facebook_message(sender_id,message_text) 
 				except Exception as e:
 					print e
