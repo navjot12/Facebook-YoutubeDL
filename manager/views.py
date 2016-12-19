@@ -127,12 +127,12 @@ def post_facebook_file(fbid, url, title):
 	title = title + '.mp3'
 	print '-----' + title + '-----'
 	print '\n\n\n'
-	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
-	os.system(cmd)
-	print os.system('pwd')
+	#cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
+	#os.system(cmd)
+	os.system('pwd')
 	home_dir = os.path.expanduser('~')
 	os.system('cd '+home_dir)
-	print pwd
+	os.system('pwd')
 	os.system('la')
 	print '\n\n\n'
 '''
