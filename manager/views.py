@@ -40,13 +40,13 @@ def post_facebook_quickreply(fbid, url):
 		    "quick_replies":[
 			    {
 			    	"content_type":"text",
-			        "title":'Audio'+ url,
-			        "payload":'Audio :' + url
+			        "title":'Audio',
+			        "payload":'Audio !$#@' + url
 			    },
 			    {
 				    "content_type":"text",
-			    	"title":'Video'+ url,
-			    	"payload":'Video :' + url
+			    	"title":'Video',
+			    	"payload":'Video !$#@' + url
 			    }
 		    ]
 		}
@@ -58,13 +58,13 @@ def post_facebook_quickreply(fbid, url):
 def handle_quickreply(fbid, payload):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
-	url = payload.split(':')[1]
+	url = payload.split('!$#@')[1]
 	video = pafy.new(url)
 	best = video.getbest()
 	message_text = video.title + '\t(' + video.duration + ')'
 	post_facebook_message(sender_id,message_text)
 	
-	if payload.split(':')[0] == 'Video':
+	if payload.split('!$#@')[0] == 'Video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
@@ -73,7 +73,7 @@ def handle_quickreply(fbid, payload):
 		#post_facebook_video(sender_id, best.url)
 		post_facebook_file(sender_id, best.url)
 	
-	elif payload.split(':')[0] == 'Audio':
+	elif payload.split('!$#@')[0] == 'Audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 		post_facebook_audio(sender_id, bestaudio.url)
