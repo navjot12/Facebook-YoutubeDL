@@ -40,12 +40,12 @@ def post_facebook_quickreply(fbid, url):
 		    "quick_replies":[
 			    {
 			    	"content_type":"text",
-			        "title":'Audio',
+			        "title":'Audio'+ url,
 			        "payload":'Audio :' + url
 			    },
 			    {
 				    "content_type":"text",
-			    	"title":'Video',
+			    	"title":'Video'+ url,
 			    	"payload":'Video :' + url
 			    }
 		    ]
