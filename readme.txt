@@ -1,4 +1,4 @@
-A python script that acts as the backend for a facebook bot. The bot accepts the URL for a youtube video and uses quickreplies to provide audio or video. Writing "audio"/"video" in the message provides a link to download the audio/video.
+A django project that acts as the backend for a facebook bot. The bot accepts the URL for a youtube video and uses quickreplies to provide audio or video. Writing "audio"/"video" in the message provides a link to download the audio/video.
 
 To install dependencies, run the following command in terminal:
 
