@@ -75,11 +75,11 @@ def handle_quickreply(sender_id, payload):
 	
 	if payload.split('!$#@')[0] == 'video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
+		post_facebook_video(sender_id, url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
-		post_facebook_video(sender_id, url)
 
 	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
