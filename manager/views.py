@@ -137,20 +137,12 @@ def post_facebook_audio(fbid, url):
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
 
-	credentials = get_credentials()
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('drive', 'v3', http=http)
-
-
 	os.system('git init')
 	os.system('git config user.email \"singh_navjot75@yahoo.ca\"')
 	os.system('git config user.name \"Navjot Singh\"')
 	os.system('git add '+title)
 	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
-	os.system('git remote add origin git+ssh://git@github.com:NSingh12/music.git')
 	os.system('git push origin master')
-	#os.system('NSingh12')
-	#os.system('dtu/2k14/mc/045')
 	
 	response_msg_file = {
 		"recipient":{
