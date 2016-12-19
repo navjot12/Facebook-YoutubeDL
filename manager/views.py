@@ -133,7 +133,7 @@ def post_facebook_file(fbid, url, title):
 	home_dir = os.path.expanduser('~')
 	os.system('cd '+home_dir)
 	os.system('pwd')
-	os.system('la')
+	os.system('ls')
 	print '\n\n\n'
 '''
 	os.system('git init')
