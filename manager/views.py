@@ -15,8 +15,37 @@ import time
 import requests
 import pafy
 
+from __future__ import print_function
+import httplib2
+import os
+
+from apiclient import discovery
+from oauth2client import client
+from oauth2client import tools
+from oauth2client.file import Storage
+
+try:
+    import argparse
+    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+except ImportError:
+    flags = None
+
+# If modifying these scopes, delete your previously saved credentials
+# at ~/.credentials/drive-python-quickstart.json
+SCOPES = 'https://www.googleapis.com/auth/drive'
+CLIENT_SECRET_FILE = 'client_secret.json'
+APPLICATION_NAME = 'Drive API Python Quickstart'
+
 VERIFY_TOKEN = 'youtube-download-karega'
 PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
+
+def get_credentials():
+    home_dir = os.path.expanduser('~')
+    credential_dir = os.path.join(home_dir, '/credentials')
+    credential_path = os.path.join(credential_dir,'drive-python-quickstart.json')
+    store = Storage(credential_path)
+    credentials = store.get()
+    return credentials
 
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
@@ -42,12 +71,12 @@ def post_facebook_quickreply(fbid, url):
 			    {
 			    	"content_type":"text",
 			        "title":'Audio',
-			        "payload":'Audio!$#@' + url
+			        "payload":'audio!$#@' + url
 			    },
 			    {
 				    "content_type":"text",
 			    	"title":'Video',
-			    	"payload":'Video!$#@' + url
+			    	"payload":'video!$#@' + url
 			    }
 		    ]
 		}
@@ -65,15 +94,15 @@ def handle_quickreply(sender_id, payload):
 	message_text = video.title + '\t(' + video.duration + ')'
 	post_facebook_message(sender_id, message_text)
 	
-	if payload.split('!$#@')[0] == 'Video':
+	if payload.split('!$#@')[0] == 'video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
-		#post_facebook_video(sender_id, best.url)
+		post_facebook_video(sender_id, url)
 
-	elif payload.split('!$#@')[0] == 'Audio':
+	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 		post_facebook_audio(sender_id, bestaudio.url)
@@ -81,7 +110,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
-		post_facebook_file(sender_id, url, video.title)
+		#post_facebook_file(sender_id, url, video.title)
 	
 	return
 
@@ -119,23 +148,21 @@ def post_facebook_audio(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-def post_facebook_file(fbid, url, title):
+'''def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	title = title.split('|')[0].split('(')[0].split('.')[0].strip()
 	title = title.replace(' ', '_').replace('\'', '')
 	title = title + '.mp3'
 	print '-----' + title + '-----'
-	print '\n\n\n'
-	#cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
-	#os.system(cmd)
-	os.system('pwd')
-	home_dir = os.path.expanduser('~')
-	os.system('cd '+home_dir)
-	os.system('pwd')
-	os.system('ls')
-	print '\n\n\n'
-'''
+	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
+	os.system(cmd)
+
+	credentials = get_credentials()
+    http = credentials.authorize(httplib2.Http())
+    service = discovery.build('drive', 'v3', http=http)
+
+
 	os.system('git init')
 	os.system('git config user.email \"singh_navjot75@yahoo.ca\"')
 	os.system('git config user.name \"Navjot Singh\"')
@@ -235,15 +262,28 @@ class MyChatBotView(generic.View):
 						message_text = message['message']['text']
 						words = message_text.split(' ')
 						flag_URL = 0
+						flag_AV = 0
+						url = ''
+						AV = ''
 
 						for word in words:
 							if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
-								post_facebook_quickreply(sender_id, word)
 								flag_URL = 1
+								url = word
+							if word.lower() in ['audio','video']:
+								flag_AV = 1
+								AV = word.lower()
 
 						if flag_URL == 0:
 							message_text = 'Please enter a valid video link to download.'
 							post_facebook_message(sender_id, message_text)
+
+						elif flag_URL == 1 and flag_AV == 0:
+							post_facebook_quickreply(sender_id, url)
+
+						elif flag_URL == 1 and flag_AV == 1:
+							payload = AV + '!$#@' + url
+							handle_quickreply(sender_id, payload)
 
 					else:
 						pass
