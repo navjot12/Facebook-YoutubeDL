@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+
 import json
 import sys
 import time
@@ -81,7 +82,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
-		#post_facebook_file(sender_id, bestaudio.url)
+		post_facebook_file(sender_id, url, video.title)
 	
 	return
 
@@ -119,8 +120,19 @@ def post_facebook_audio(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-def post_facebook_file(fbid, url):
+def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+
+'''	r = requests.get(url)
+	soup=BS(r.text, "html.parser")
+	title = soup.title.string'''
+
+	title = title.split('|')[0].split('(')[0].split('.')[0].strip()
+	title = title.replace(' ', '_').replace('\'', '')
+	print '-----' + title + '-----'
+	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
+	os.system(cmd)
+	title = title + '.mp3'
 
 	response_msg_file = {
 		"recipient":{
@@ -129,15 +141,16 @@ def post_facebook_file(fbid, url):
 		"message":{
 			"attachment":{
 				"type":"file",
-				"payload":{
-					"url":url
-				}
+				"payload":{},
+				"filedata":open(title, 'rb')
 			}
 		}
 	}
 	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
+
+	os.system('rm '+title+'.mp3')
 
 def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
