@@ -126,11 +126,11 @@ def post_facebook_file(fbid, url, title):
 	
 	title = title.split('|')[0].split('(')[0].split('.')[0].strip()
 	title = title.replace(' ', '_').replace('\'', '')
+	title = title + '.mp3'
 	print '-----' + title + '-----'
 	
-	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '.mp3\" ' + url
+	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
-	title = title + '.mp3'
 	response_msg_file = {
 		"recipient":{
 			"id":fbid
@@ -147,7 +147,7 @@ def post_facebook_file(fbid, url, title):
 	#response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
-	os.system('rm '+title+'.mp3')
+	os.system('rm '+title)
 
 def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
