@@ -55,21 +55,21 @@ def post_facebook_quickreply(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
 
-def handle_quickreply(fbid, payload):
+def handle_quickreply(sender_id, payload):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	url = payload.split('!$#@')[1]
 	video = pafy.new(url)
 	best = video.getbest()
 	message_text = video.title + '\t(' + video.duration + ')'
-	post_facebook_message(sender_id,message_text)
+	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'Video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
-		post_facebook_message(sender_id,message_text)
+		post_facebook_message(sender_id, message_text)
 		#post_facebook_video(sender_id, best.url)
 		post_facebook_file(sender_id, best.url)
 	
@@ -78,7 +78,7 @@ def handle_quickreply(fbid, payload):
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
-		post_facebook_message(sender_id,message_text)
+		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save in .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
 		post_facebook_file(sender_id, bestaudio.url)
