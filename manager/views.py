@@ -131,21 +131,14 @@ def post_facebook_file(fbid, url, title):
 	
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
-	response_msg_file = {
-		"recipient":{
-			"id":fbid
-		},
-		"message":{
-			"attachment":{
-				"type":"file",
-				"payload":{},
-				"filedata":open(title, 'rb')
-			}
-		}
+	
+	files = {
+		'recipient':'{"id":'+fbid+'}',
+		'message':'{"attachment":{"type":"file","payload":{}}}',
+		'filedata':open(title, 'rb')
 	}
 	
-	response_msg_file = json.dumps(response_msg_file)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
+	status = requests.get(post_message_url, files=files)
 	print status
 	os.system('rm '+title)
 
