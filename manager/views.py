@@ -130,12 +130,14 @@ def post_facebook_file(fbid, url, title):
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
 	
+	os.system('git config user.email "singh_navjot75@yahoo.ca"')
+	os.system('git config user.name "Navjot Singh"')
 	os.system('git init')
 	os.system('git add '+title)
 	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
-	os.system('git remote add origin https://github.com/nsa12/music.git')
+	os.system('git remote add origin https://github.com/NSingh12/music.git')
 	os.system('git push origin master')
-
+	
 	response_msg_file = {
 		"recipient":{
 			"id": fbid
@@ -144,7 +146,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":"https://raw.githubusercontent.com/nsa12/music/master/"+title
+					"url":"https://raw.githubusercontent.com/NSingh12/music/master/"+title
 				}
 			}
 		}
