@@ -71,7 +71,7 @@ def handle_quickreply(sender_id, payload):
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
 		#post_facebook_video(sender_id, best.url)
-		post_facebook_file(sender_id, best.url)
+		#post_facebook_file(sender_id, best.url)
 	
 	elif payload.split('!$#@')[0] == 'Audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
@@ -81,7 +81,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
-		post_facebook_file(sender_id, bestaudio.url)
+		#post_facebook_file(sender_id, bestaudio.url)
 	
 	return
 
