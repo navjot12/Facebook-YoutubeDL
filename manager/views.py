@@ -137,6 +137,8 @@ def post_facebook_file(fbid, url, title):
 	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
 	os.system('git remote add origin https://github.com/NSingh12/music.git')
 	os.system('git push origin master')
+	os.system('NSingh12')
+	os.system('dtu/2k14/mc/045')
 	
 	response_msg_file = {
 		"recipient":{
