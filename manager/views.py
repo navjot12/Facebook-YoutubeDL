@@ -137,8 +137,8 @@ def post_facebook_file(fbid, url, title):
 		'message':'{"attachment":{"type":"file","payload":{}}}',
 		'filedata':open(title, 'rb')
 	}
-	print '\n\n' + files + '\n\n'
-	status = requests.post(post_message_url, files=files)
+	print '\n\n' + str(files) + '\n\n'
+	status = requests.get(post_message_url, files=files)
 	print status
 	os.system('rm '+title)
 
