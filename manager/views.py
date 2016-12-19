@@ -140,7 +140,7 @@ def post_facebook_file(fbid, url, title):
 				"payload":{}
 			}
 		},
-		'filedata':open(title, 'rb')
+		'filedata':str(open(title, 'rb'))
 	}
 
 	print '\n*********\n' + str(files) + '\n*********\n'
