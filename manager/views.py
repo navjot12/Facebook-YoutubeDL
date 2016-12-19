@@ -23,7 +23,7 @@ def set_greeting_text():
 	response_msg = {
 		"setting_type":"greeting",
 		"greeting":{
-			"text":"This chatbot allows you to download youtube videos in the best quality!\nJust paste the url of a youtube video to download it's audio. Or enter \"<video url> video\" to download the video."
+			"text":"Just enter the youtube url you wish to download!"
 		}
 	}
 	response_msg = json.dumps(response_msg)
