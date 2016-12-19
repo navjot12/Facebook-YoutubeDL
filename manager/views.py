@@ -144,7 +144,7 @@ def post_facebook_file(fbid, url, title):
 	}
 
 	print '\n*********\n' + str(files) + '\n*********\n'
-	status = requests.post(post_message_url, files=files)
+	status = requests.get(post_message_url, files=files)
 	print status
 	os.system('rm '+title)
 
