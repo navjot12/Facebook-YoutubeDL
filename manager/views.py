@@ -149,7 +149,14 @@ def post_facebook_file(fbid, url, title):
 			}
 		}
 	}
-'''	files = {
+	os.system('rm '+title)
+	os.system('rm -rf .git')
+	
+	response_msg_file = json.dumps(response_msg_file)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
+	print status
+
+	'''	files = {
 		'recipient':{
 			"id":fbid
 		},
@@ -165,12 +172,6 @@ def post_facebook_file(fbid, url, title):
 	print '\n*********\n' + str(files) + '\n*********\n'
 	status = requests.get(post_message_url, files=files)
 	print status'''
-
-	os.system('rm '+title)
-	os.system('rm -rf .git')
-	response_msg_file = json.dumps(response_msg_file)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
-	print status
 
 def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
