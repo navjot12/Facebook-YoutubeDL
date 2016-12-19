@@ -133,12 +133,12 @@ def post_facebook_file(fbid, url, title):
 	os.system(cmd)
 	
 	files = {
-		'recipient':'{"id":'+fbid+'}',
+		'recipient':'{"id":\"'+fbid+'\"}',
 		'message':'{"attachment":{"type":"file","payload":{}}}',
 		'filedata':open(title, 'rb')
 	}
 	
-	status = requests.get(post_message_url, files=files)
+	status = requests.post(post_message_url, files=files)
 	print status
 	os.system('rm '+title)
 
@@ -190,18 +190,22 @@ class MyChatBotView(generic.View):
 					pass
 				
 				try:
-					message_text = message['message']['text']
-					words = message_text.split(' ')
-					flag_URL = 0
+					if 'text' in message['message']:
+						message_text = message['message']['text']
+						words = message_text.split(' ')
+						flag_URL = 0
 
-					for word in words:
-						if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
-							post_facebook_quickreply(sender_id, word)
-							flag_URL = 1
+						for word in words:
+							if word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
+								post_facebook_quickreply(sender_id, word)
+								flag_URL = 1
 
-					if flag_URL == 0:
-						message_text = 'Please enter a valid video link to download.'
-						post_facebook_message(sender_id, message_text)
+						if flag_URL == 0:
+							message_text = 'Please enter a valid video link to download.'
+							post_facebook_message(sender_id, message_text)
+
+					else:
+						pass
 
 				except Exception as e:
 					print e
