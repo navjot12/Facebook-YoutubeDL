@@ -21,9 +21,10 @@ PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwh
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg = {
-		"setting_type":"greeting",
+		"setting_type": "greeting",
 		"greeting":{
 			"text":"If you are on MESSENGER app or www.messenger.com: Just enter the youtube url you wish to download!\nIf you are on browser: Enter \"youtube-url \'audio\'\" or \"youtube-url \'video\'\"."
+		}
 	}
 	response_msg = json.dumps(response_msg)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
