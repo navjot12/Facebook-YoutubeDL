@@ -130,7 +130,26 @@ def post_facebook_file(fbid, url, title):
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
 	
-	files = {
+	os.system('git init')
+	os.system('git add '+title)
+	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
+	os.system('git remote add origin https://github.com/nsa12/music.git')
+	os.system('git push origin master')
+
+	response_msg_file = {
+		"recipient":{
+			"id": fbid
+		},
+		"message":{
+			"attachment":{
+				"type":"file",
+				"payload":{
+					"url":"https://raw.githubusercontent.com/nsa/music/master/"+title
+				}
+			}
+		}
+	}
+'''	files = {
 		'recipient':{
 			"id":fbid
 		},
@@ -145,8 +164,13 @@ def post_facebook_file(fbid, url, title):
 
 	print '\n*********\n' + str(files) + '\n*********\n'
 	status = requests.get(post_message_url, files=files)
-	print status
+	print status'''
+
 	os.system('rm '+title)
+	os.system('rm -rf .git')
+	response_msg_file = json.dumps(response_msg_file)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
+	print status
 
 def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
