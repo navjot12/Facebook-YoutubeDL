@@ -126,10 +126,16 @@ def post_facebook_file(fbid, url, title):
 	title = title.replace(' ', '_').replace('\'', '')
 	title = title + '.mp3'
 	print '-----' + title + '-----'
-	
+	print '\n\n\n'
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
 	print os.system('pwd')
+	home_dir = os.path.expanduser('~')
+	os.system('cd '+home_dir)
+	print pwd
+	os.system('la')
+	print '\n\n\n'
+'''
 	os.system('git init')
 	os.system('git config user.email \"singh_navjot75@yahoo.ca\"')
 	os.system('git config user.name \"Navjot Singh\"')
@@ -137,8 +143,8 @@ def post_facebook_file(fbid, url, title):
 	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
 	os.system('git remote add origin git+ssh://git@github.com:NSingh12/music.git')
 	os.system('git push origin master')
-	os.system('NSingh12')
-	os.system('dtu/2k14/mc/045')
+	#os.system('NSingh12')
+	#os.system('dtu/2k14/mc/045')
 	
 	response_msg_file = {
 		"recipient":{
@@ -160,7 +166,7 @@ def post_facebook_file(fbid, url, title):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
 
-	'''	files = {
+	files = {
 		'recipient':{
 			"id":fbid
 		},
