@@ -131,7 +131,7 @@ def post_facebook_file(fbid, url, title):
 	os.system(cmd)
 	
 	files = {
-		'recipient':{"id":fbid}
+		'recipient':{"id":fbid},
 		'message':{"attachment":{"type":"file","payload":{}}},
 		'filedata':open(title, 'rb')
 	}
