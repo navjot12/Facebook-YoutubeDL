@@ -70,7 +70,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
-		#post_facebook_video(sender_id, best.url)
+		post_facebook_video(sender_id, best.url)
 		post_facebook_file(sender_id, best.url)
 	
 	elif payload.split('!$#@')[0] == 'Audio':
@@ -200,5 +200,5 @@ class MyChatBotView(generic.View):
 		return HttpResponse()
 
 def index(request):
-	#set_greeting_text()
+	set_greeting_text()
 	return HttpResponse('Building Youtube Downloader Bot!')
