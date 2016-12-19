@@ -4,4 +4,4 @@ To install dependencies, run the following command in terminal:
 
 ```sudo pip install -r requirements.txt```
 
-This project is deployed on heroku. Provide your own verify-token and page access token if cloning repository.
+This project is deployed on heroku. Provide your own verify-token and page access token if cloning.
