@@ -41,12 +41,12 @@ def post_facebook_quickreply(fbid, url):
 			    {
 			    	"content_type":"text",
 			        "title":'Audio',
-			        "payload":'Audio !$#@' + url
+			        "payload":'Audio!$#@' + url
 			    },
 			    {
 				    "content_type":"text",
 			    	"title":'Video',
-			    	"payload":'Video !$#@' + url
+			    	"payload":'Video!$#@' + url
 			    }
 		    ]
 		}
@@ -171,6 +171,7 @@ class MyChatBotView(generic.View):
 				try:
 					if 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
+						continue
 					else:
 						pass
 				except Exception as e:
