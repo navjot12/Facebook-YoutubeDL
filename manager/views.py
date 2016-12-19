@@ -131,11 +131,20 @@ def post_facebook_file(fbid, url, title):
 	os.system(cmd)
 	
 	files = {
-		'recipient':{"id":fbid},
-		'message':{"attachment":{"type":"file","payload":{}}},
-		'filedata':open(title, 'rb')
+		'recipient':{
+			"id":fbid
+		},
+		'message':{
+			"attachment":{
+				"type":"file",
+				"payload":{}
+			}
+		},
+		'filedata':str(open(title, 'rb'))
 	}
 	
+	files = json.dumps(files)
+
 	print '\n*********\n' + str(files) + '\n*********\n'
 	status = requests.post(post_message_url, files=files)
 	print status
