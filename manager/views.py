@@ -144,7 +144,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":"https://raw.githubusercontent.com/nsa/music/master/"+title
+					"url":"https://raw.githubusercontent.com/nsa12/music/master/"+title
 				}
 			}
 		}
