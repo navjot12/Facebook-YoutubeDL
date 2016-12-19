@@ -129,13 +129,13 @@ def post_facebook_file(fbid, url, title):
 	
 	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
-	
+	print os.system('pwd')
 	os.system('git init')
 	os.system('git config user.email \"singh_navjot75@yahoo.ca\"')
 	os.system('git config user.name \"Navjot Singh\"')
 	os.system('git add '+title)
 	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
-	os.system('git remote add origin https://github.com/NSingh12/music.git')
+	os.system('git remote add origin git+ssh://git@github.com:NSingh12/music.git')
 	os.system('git push origin master')
 	os.system('NSingh12')
 	os.system('dtu/2k14/mc/045')
