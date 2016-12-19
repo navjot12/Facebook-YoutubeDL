@@ -140,10 +140,8 @@ def post_facebook_file(fbid, url, title):
 				"payload":{}
 			}
 		},
-		'filedata':str(open(title, 'rb'))
+		'filedata':open(title, 'rb')
 	}
-	
-	files = json.dumps(files)
 
 	print '\n*********\n' + str(files) + '\n*********\n'
 	status = requests.post(post_message_url, files=files)
