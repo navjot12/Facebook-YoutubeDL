@@ -87,11 +87,19 @@ def handle_quickreply(sender_id, payload):
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
-	response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":message_text}})
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+	response_msg = {
+		"recipient":{
+			"id":fbid
+		},
+		"message":{
+			"text":message_text
+		}
+	}
+	response_msg = json.dumps(response_msg)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status.json()
 
-def post_facebook_audio(fbid, message_text):
+def post_facebook_audio(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 
 	response_msg_audio = {
@@ -102,7 +110,7 @@ def post_facebook_audio(fbid, message_text):
 			"attachment":{
 		    	"type":"audio",
 		    	"payload":{
-		        	"url":message_text
+		        	"url": url
 		      	}
 		    }
 		}
@@ -111,7 +119,7 @@ def post_facebook_audio(fbid, message_text):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-def post_facebook_file(fbid, message_text):
+def post_facebook_file(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 
 	response_msg_file = {
@@ -122,16 +130,16 @@ def post_facebook_file(fbid, message_text):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":"https://petersapparel.com/bin/receipt.pdf"
+					"url":url
 				}
 			}
 		}
 	}
-	response_msg_file = json.dump(response_msg_file)
+	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
 
-def post_facebook_video(fbid, message_text):
+def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	response_msg_video = {
 		"recipient":{
@@ -141,12 +149,12 @@ def post_facebook_video(fbid, message_text):
 			"attachment":{
 				"type":"video",
 				"payload":{
-					"url":message_text
+					"url":url
 				}
 			}
 		}
 	}
-	response_msg_video = json.dump(response_msg_video)
+	response_msg_video = json.dumps(response_msg_video)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_video)
 	print status
 
