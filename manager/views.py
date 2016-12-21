@@ -14,9 +14,62 @@ import sys
 import time
 import requests
 import pafy
+from bs4 import BeautifulSoup as BS
 
 VERIFY_TOKEN = 'youtube-download-karega'
 PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
+
+def scraper(search):
+	url = "https://www.youtube.com/results?search_query="
+	#search = raw_input('Enter string to search on youtube: ')
+	for char in search:
+		if not (char.isalnum() or char==' '):
+			search = search.replace(char, '%'+hex(ord(char)).split('0x')[1])
+	search = search.replace(' ', '+')
+	url = url + search
+	print url
+	r=requests.get(url)
+	soup=BS(r.text, "html.parser")
+	links = soup.find_all('div', {'class': 'yt-lockup yt-lockup-tile yt-lockup-video clearfix'})
+	videos = soup.find_all('div', {'class' : 'yt-lockup-dismissable yt-uix-tile'})
+	
+	COLLECTION = {}
+	COLLECTION['heading'] = []
+	COLLECTION['url'] = []
+	COLLECTION['duration'] = []
+	COLLECTION['uploader'] = []
+	COLLECTION['uploaded_on'] = []
+	COLLECTION['views'] = []
+	COLLECTION['image'] = []
+
+	for video in videos:
+		thumbnail = video.find('div', {'class': 'yt-lockup-thumbnail contains-addto'})
+		data = video.find('div', {'class': 'yt-lockup-content'})
+		try:
+			uploader = data.find('div', {'class': 'yt-lockup-byline'}).find('a').text
+			heading = data.find_all('h3', {'class': 'yt-lockup-title'})[0].find_all('a')[0].text
+			url = data.find('h3', {'class': 'yt-lockup-title'}).find('a')['href']
+			duration = data.find('h3', {'class': 'yt-lockup-title'}).find('span').text
+			uploaded_on = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[0].text
+			views = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[1].text
+			image = thumbnail.find('span', {'class': 'yt-thumb-simple'}).find('img')['src']
+		except:
+			continue
+
+		if image.endswith('.gif'):
+			break
+		
+		#print heading + '--' + duration + '--' +  uploader + '--' + uploaded_on + '--' + views + '--' + image + '\n'
+
+		COLLECTION['heading'].append(heading)
+		COLLECTION['url'].append(url)
+		COLLECTION['duration'].append(duration)
+		COLLECTION['uploader'].append(uploader)
+		COLLECTION['uploaded_on'].append(uploaded_on)
+		COLLECTION['views'].append(views)
+		COLLECTION['image'].append(image)
+
+	return COLLECTION
 
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
@@ -84,6 +137,84 @@ def handle_quickreply(sender_id, payload):
 		#post_facebook_file(sender_id, url, video.title)
 	
 	return
+
+def post_facebook_list(fbid, results):
+	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+
+	response_msg_list = {
+		"recipient":{
+			"id": fbid
+		},
+		"message": {
+	    	"attachment": {
+	        	"type": "template",
+	        	"payload": {
+		            "template_type": "list",
+	            	"elements": [
+	                	{
+		                    "title": results['heading'][0],
+	                    	"image_url": results['image'][0],
+	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
+	                    	"default_action": {
+		                        "type": "web_url",
+	                        	"url": results['url'][0],
+	                        	"messenger_extensions": true,
+	                        	"webview_height_ratio": "tall",
+	                        	"fallback_url": "https://www.youtube.com/"
+	                    	},
+	                    	"buttons": [
+	                        	{
+		                            "title": "Download",
+		                            "type": "postback",
+	                            	"payload": results['url'][0]
+	                        	}
+	                    	]
+	                	}
+		            ],
+		            "buttons": [
+		                {
+		                    "title": "Go To YouTube",
+		                    "type": "web_url",
+		                    "url": "https://www.youtube.com",
+		                    "messenger_extensions": true,
+		                    "webview_height_ratio": "tall",
+		                    "fallback_url": "https://www.youtube.com" 
+		                }
+		            ]  
+		        }
+		    }
+		}
+	    
+	}
+
+	i = 1
+	length = results['views'].__len__()
+
+	while i<4 and i<length:
+		item = {
+			"title": results['heading'][i],
+			"image_url": results['image'][i],
+			"subtitle": 'Uploaded by: ' + results['uploader'][i] + ', ' + results['uploaded_on'][i] + 'and has had ' + results['views'][i],
+			"default_action": {
+				"type": "web_url",
+				"url": results['url'][i],
+				"messenger_extensions": true,
+				"webview_height_ratio": "tall",
+				"fallback_url": "https://www.youtube.com/"
+			},
+			"buttons": [
+				{
+					"title": "Download",
+					"type": "postback",
+					"payload": results['url'][i]
+				}
+			]                
+		}
+		response_msg_list['message']['attachment']['payload']['elements'].append(item)
+
+	response_msg_list = json.dumps(response_msg_list)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
+	print status.json()
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
@@ -221,6 +352,15 @@ class MyChatBotView(generic.View):
 					pass
 				
 				try:
+					if 'postback' in message:
+						post_facebook_quickreply(sender_id, message['postback']['payload'])
+					else:
+						pass
+				except Exception as e:
+					print e
+					pass
+
+				try:
 					if 'text' in message['message']:
 						message_text = message['message']['text']
 						words = message_text.split(' ')
@@ -230,7 +370,7 @@ class MyChatBotView(generic.View):
 						AV = ''
 
 						for word in words:
-							if word.startswith('https://') or word.startswith('https://') or word.startswith('www.') or word.startswith('youtu'):
+							if word.startswith('https://') or word.startswith('http://') or word.startswith('www.') or word.startswith('youtu'):
 								flag_URL = 1
 								url = word
 							if word.lower() in ['audio','video']:
@@ -238,8 +378,17 @@ class MyChatBotView(generic.View):
 								AV = word.lower()
 
 						if flag_URL == 0:
-							message_text = 'Please enter a valid video link to download.'
-							post_facebook_message(sender_id, message_text)
+							#message_text = 'Please enter a valid video link to download.'
+							#post_facebook_message(sender_id, message_text)
+							send_text = 'YouTube URL not found. Searching for \"' + message_text +'\" on YouTube.'
+							post_facebook_message(sender_id, send_text)
+							results = scraper(message_text)
+							if results['views'].__len__() == 0:
+								send_text = 'Sorry, no results found. Please try again!'
+								post_facebook_message(sender_id, send_text)
+							else:
+								post_facebook_list(sender_id, results)
+							
 
 						elif flag_URL == 1 and flag_AV == 0:
 							post_facebook_quickreply(sender_id, url)
