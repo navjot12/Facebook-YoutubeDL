@@ -205,7 +205,7 @@ def post_facebook_list(fbid, results):
 			"default_action": {
 				"type": "web_url",
 				"url": results['url'][i],
-				"messenger_extensions": true,
+				"messenger_extensions": True,
 				"webview_height_ratio": "tall",
 				"fallback_url": "https://www.youtube.com/"
 			},
