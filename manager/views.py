@@ -378,6 +378,35 @@ def post_facebook_list(fbid, results):
 	print '$'*25
 	print '\n\n'
 
+def post_facebook_button(fbid, results):
+	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+
+	response_msg_button = {
+	  	"recipient":{
+	    	"id":fbid
+	  	},
+	  	"message":{
+	    	"attachment":{
+	    	  	"type":"template",
+	    	  	"payload":{
+		        	"template_type": "button",
+	        		"text": output_text,
+	        		"buttons":[
+		          		{
+		            		"type": "postback",
+		            		"title": results['heading'][0]
+		            		"payload": results['url'][0]
+		          		}
+	       			]
+	    		}
+	    	}
+	  	}
+	}
+	
+	response_msg_button = json.dumps(response_msg_button)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_button)
+	print status.json()
+
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	response_msg = {
@@ -550,7 +579,7 @@ class MyChatBotView(generic.View):
 								send_text = 'Sorry, no results found. Please try again!'
 								post_facebook_message(sender_id, send_text)
 							else:
-								post_facebook_list(sender_id, results)
+								post_facebook_button(sender_id, results)
 							
 
 						elif flag_URL == 1 and flag_AV == 0:
