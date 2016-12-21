@@ -169,7 +169,6 @@ def post_facebook_list(fbid, results):
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
 	                        	"webview_height_ratio": "tall",
-	                        	"fallback_url": "https://www.youtube.com/"
 	                    	},
 	                    	"buttons": [
 	                        	{
@@ -187,7 +186,6 @@ def post_facebook_list(fbid, results):
 	                			"type": "web_url",
 	                			"url": results['url'][1],
 	                			"webview_height_ratio": "tall",
-	                			"fallback_url": "https://www.youtube.com/"
 	                		},
 	                		"buttons": [
 	                			{
