@@ -136,7 +136,7 @@ def handle_quickreply(sender_id, payload):
 	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		#post_facebook_audio(sender_id, bestaudio.url)
+		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
@@ -174,8 +174,8 @@ def post_facebook_list(fbid, results):
 	                    	},
 	                    	"buttons": [
 	                        	{
-		                            "title": "Download",
 		                            "type": "postback",
+		                            "title": "Download",
 	                            	"payload": results['url'][0]
 	                        	}
 	                    	]
@@ -207,7 +207,7 @@ def post_facebook_list(fbid, results):
 		                    "url": "https://www.youtube.com",
 		                    "messenger_extensions": False,
 		                    "webview_height_ratio": "tall",
-		                    "fallback_url": "https://www.youtube.com" 
+		                    "fallback_url": "https://www.facebook.com" 
 		                }
 		            ]  
 		        }
@@ -216,10 +216,9 @@ def post_facebook_list(fbid, results):
 	    
 	}
 
+	'''
 	i = 1
 	length = results['views'].__len__()
-
-	'''
 	while i<4 and i<length:
 		item = {
 			"title": results['heading'][i],
