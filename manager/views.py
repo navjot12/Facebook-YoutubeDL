@@ -167,9 +167,10 @@ def post_facebook_list_original(fbid, results):
 	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
 	                    	"default_action": {
 		                        "type": "web_url",
-		                        "title":"View Video",
 	                        	"url": results['url'][0],
+	                        	"messenger_extensions": False,
 	                        	"webview_height_ratio": "compact",
+	                        	"fallback_url": "https://www.youtube.com/"
 	                    	},
 	                    	"buttons": [
 	                        	{
@@ -185,9 +186,10 @@ def post_facebook_list_original(fbid, results):
 	                		"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
 	                		"default_action": {
 	                			"type": "web_url",
-	                			"title":"View Video",
 	                			"url": results['url'][1],
+	                			"messenger_extensions": False,
 	                			"webview_height_ratio": "compact",
+	                			"fallback_url": "https://www.youtube.com/"
 	                		},
 	                		"buttons": [
 	                			{
@@ -251,7 +253,7 @@ def post_facebook_list_original(fbid, results):
 	print '$'*25
 	print '\n\n'
 
-def post_facebook_list(fbid, results):
+def post_facebook_list_original(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n\n'
