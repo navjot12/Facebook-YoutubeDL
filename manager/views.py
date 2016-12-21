@@ -177,6 +177,25 @@ def post_facebook_list(fbid, results):
 	                        	}
 	                    	]
 	                	}
+	                	{
+	                		"title": results['heading'][1],
+	                		"image_url": results['image'][1],
+	                		"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
+	                		"default_action": {
+	                			"type": "web_url",
+	                			"url": results['url'][1],
+	                			"messenger_extensions": True,
+	                			"webview_height_ratio": "tall",
+	                			"fallback_url": "https://www.youtube.com/"
+	                		},
+	                		"buttons": [
+	                			{
+	                				"title": "Download",
+	                				"type": "postback",
+	                				"payload": results['url'][1]
+	                			}
+	                		]
+	                	}
 		            ],
 		            "buttons": [
 		                {
@@ -363,6 +382,15 @@ class MyChatBotView(generic.View):
 				try:
 					if 'postback' in message:
 						post_facebook_quickreply(sender_id, message['postback']['payload'])
+					else:
+						pass
+				except Exception as e:
+					print e
+					pass
+
+				try:
+					if 'is_echo' in message:
+						continue
 					else:
 						pass
 				except Exception as e:
