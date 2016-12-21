@@ -147,6 +147,9 @@ def handle_quickreply(sender_id, payload):
 
 def post_facebook_list(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+	
+	print '\n\n'
+	print '$'*25
 
 	response_msg_list = {
 		"recipient":{
@@ -241,8 +244,14 @@ def post_facebook_list(fbid, results):
 	'''
 
 	response_msg_list = json.dumps(response_msg_list)
+	
+	print response_msg_list
+	
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
 	print status.json()
+
+	print '$'*25
+	print '\n\n'
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
@@ -372,7 +381,7 @@ class MyChatBotView(generic.View):
 				try:
 					if 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
-						continue
+						return
 					else:
 						pass
 				except Exception as e:
@@ -389,16 +398,7 @@ class MyChatBotView(generic.View):
 					pass
 
 				try:
-					if 'is_echo' in message:
-						continue
-					else:
-						pass
-				except Exception as e:
-					print e
-					pass
-
-				try:
-					if 'text' in message['message']:
+					if 'text' in message['message'] and 'is_echo' not in message:
 						message_text = message['message']['text']
 						words = message_text.split(' ')
 						flag_URL = 0
