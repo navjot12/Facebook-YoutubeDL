@@ -394,7 +394,7 @@ def post_facebook_button(fbid, results):
 	        		"buttons":[
 		          		{
 		            		"type": "postback",
-		            		"title": results['heading'][0]
+		            		"title": results['heading'][0],
 		            		"payload": results['url'][0]
 		          		}
 	       			]
