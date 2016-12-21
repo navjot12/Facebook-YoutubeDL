@@ -197,7 +197,8 @@ def post_facebook_list(fbid, results):
 	i = 1
 	length = results['views'].__len__()
 
-	'''while i<4 and i<length:
+	'''
+	while i<4 and i<length:
 		item = {
 			"title": results['heading'][i],
 			"image_url": results['image'][i],
