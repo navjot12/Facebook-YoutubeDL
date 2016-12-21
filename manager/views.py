@@ -176,7 +176,7 @@ def post_facebook_list(fbid, results):
 	                            	"payload": results['url'][0]
 	                        	}
 	                    	]
-	                	}
+	                	},
 	                	{
 	                		"title": results['heading'][1],
 	                		"image_url": results['image'][1],
