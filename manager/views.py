@@ -145,7 +145,7 @@ def handle_quickreply(sender_id, payload):
 	
 	return
 
-def post_facebook_list_original(fbid, results):
+def post_facebook_list(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n\n'
@@ -581,7 +581,7 @@ class MyChatBotView(generic.View):
 								send_text = 'Sorry, no results found. Please try again!'
 								post_facebook_message(sender_id, send_text)
 							else:
-								post_facebook_button(sender_id, results)
+								post_facebook_list(sender_id, results)
 							
 
 						elif flag_URL == 1 and flag_AV == 0:
