@@ -390,11 +390,11 @@ def post_facebook_button(fbid, results):
 	    	  	"type":"template",
 	    	  	"payload":{
 		        	"template_type": "button",
-	        		"text": output_text,
+	        		"text": results['heading'][0],
 	        		"buttons":[
 		          		{
 		            		"type": "postback",
-		            		"title": results['heading'][0],
+		            		"title": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' with ' + results['views'][0],
 		            		"payload": results['url'][0]
 		          		}
 	       			]
