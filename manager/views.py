@@ -168,7 +168,7 @@ def post_facebook_list(fbid, results):
 	                    	"default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
-	                        	"messenger_extensions": True,
+	                        	"messenger_extensions": False,
 	                        	"webview_height_ratio": "tall",
 	                        	"fallback_url": "https://www.youtube.com/"
 	                    	},
@@ -187,7 +187,7 @@ def post_facebook_list(fbid, results):
 	                		"default_action": {
 	                			"type": "web_url",
 	                			"url": results['url'][1],
-	                			"messenger_extensions": True,
+	                			"messenger_extensions": False,
 	                			"webview_height_ratio": "tall",
 	                			"fallback_url": "https://www.youtube.com/"
 	                		},
@@ -205,7 +205,7 @@ def post_facebook_list(fbid, results):
 		                    "title": "Go To YouTube",
 		                    "type": "web_url",
 		                    "url": "https://www.youtube.com",
-		                    "messenger_extensions": True,
+		                    "messenger_extensions": False,
 		                    "webview_height_ratio": "tall",
 		                    "fallback_url": "https://www.youtube.com" 
 		                }
@@ -228,7 +228,7 @@ def post_facebook_list(fbid, results):
 			"default_action": {
 				"type": "web_url",
 				"url": results['url'][i],
-				"messenger_extensions": True,
+				"messenger_extensions": False,
 				"webview_height_ratio": "tall",
 				"fallback_url": "https://www.youtube.com/"
 			},
@@ -398,7 +398,7 @@ class MyChatBotView(generic.View):
 					pass
 
 				try:
-					if 'text' in message['message'] and 'is_echo' not in message:
+					if 'text' in message['message'] and 'is_echo' not in message['message']:
 						message_text = message['message']['text']
 						words = message_text.split(' ')
 						flag_URL = 0
