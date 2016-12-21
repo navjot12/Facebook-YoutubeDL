@@ -127,7 +127,7 @@ def handle_quickreply(sender_id, payload):
 	
 	if payload.split('!$#@')[0] == 'video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
-		post_facebook_video(sender_id, url)
+		#post_facebook_video(sender_id, url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
@@ -136,7 +136,7 @@ def handle_quickreply(sender_id, payload):
 	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		post_facebook_audio(sender_id, bestaudio.url)
+		#post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
