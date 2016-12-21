@@ -217,8 +217,9 @@ def post_facebook_list(fbid, results):
 					"payload": results['url'][i]
 				}
 			]                
-		}'''
+		}
 		response_msg_list['message']['attachment']['payload']['elements'].append(item)
+	'''
 
 	response_msg_list = json.dumps(response_msg_list)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
