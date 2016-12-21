@@ -197,7 +197,7 @@ def post_facebook_list(fbid, results):
 	i = 1
 	length = results['views'].__len__()
 
-	while i<4 and i<length:
+	'''while i<4 and i<length:
 		item = {
 			"title": results['heading'][i],
 			"image_url": results['image'][i],
@@ -216,7 +216,7 @@ def post_facebook_list(fbid, results):
 					"payload": results['url'][i]
 				}
 			]                
-		}
+		}'''
 		response_msg_list['message']['attachment']['payload']['elements'].append(item)
 
 	response_msg_list = json.dumps(response_msg_list)
