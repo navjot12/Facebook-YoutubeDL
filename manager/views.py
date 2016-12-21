@@ -168,7 +168,6 @@ def post_facebook_list(fbid, results):
 	                    	"default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
-	                        	"messenger_extensions": False,
 	                        	"webview_height_ratio": "tall",
 	                        	"fallback_url": "https://www.youtube.com/"
 	                    	},
@@ -187,7 +186,6 @@ def post_facebook_list(fbid, results):
 	                		"default_action": {
 	                			"type": "web_url",
 	                			"url": results['url'][1],
-	                			"messenger_extensions": False,
 	                			"webview_height_ratio": "tall",
 	                			"fallback_url": "https://www.youtube.com/"
 	                		},
