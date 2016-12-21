@@ -22,6 +22,10 @@ PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwh
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
 	#search = raw_input('Enter string to search on youtube: ')
+	print '*****'*5
+	print '*****'*6
+	print '\n\nScraper\'s Up!'
+
 	for char in search:
 		if not (char.isalnum() or char==' '):
 			search = search.replace(char, '%'+hex(ord(char)).split('0x')[1])
@@ -59,7 +63,7 @@ def scraper(search):
 		if image.endswith('.gif'):
 			break
 		
-		#print heading + '--' + duration + '--' +  uploader + '--' + uploaded_on + '--' + views + '--' + image + '\n'
+		print heading + '--' + duration + '--' +  uploader + '--' + uploaded_on + '--' + views + '--' + image + '\n'
 
 		COLLECTION['heading'].append(heading)
 		COLLECTION['url'].append(url)
@@ -68,7 +72,10 @@ def scraper(search):
 		COLLECTION['uploaded_on'].append(uploaded_on)
 		COLLECTION['views'].append(views)
 		COLLECTION['image'].append(image)
-
+	
+	print '\n\nScraper\'s Down!'
+	print '*****'*5
+	print '*****'*6
 	return COLLECTION
 
 def set_greeting_text():
@@ -382,6 +389,7 @@ class MyChatBotView(generic.View):
 							#post_facebook_message(sender_id, message_text)
 							send_text = 'YouTube URL not found. Searching for \"' + message_text +'\" on YouTube.'
 							post_facebook_message(sender_id, send_text)
+							
 							results = scraper(message_text)
 							if results['views'].__len__() == 0:
 								send_text = 'Sorry, no results found. Please try again!'
