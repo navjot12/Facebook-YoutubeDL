@@ -165,7 +165,7 @@ def post_facebook_list(fbid, results):
 	                    	"default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
-	                        	"messenger_extensions": true,
+	                        	"messenger_extensions": True,
 	                        	"webview_height_ratio": "tall",
 	                        	"fallback_url": "https://www.youtube.com/"
 	                    	},
@@ -183,7 +183,7 @@ def post_facebook_list(fbid, results):
 		                    "title": "Go To YouTube",
 		                    "type": "web_url",
 		                    "url": "https://www.youtube.com",
-		                    "messenger_extensions": true,
+		                    "messenger_extensions": True,
 		                    "webview_height_ratio": "tall",
 		                    "fallback_url": "https://www.youtube.com" 
 		                }
@@ -389,7 +389,7 @@ class MyChatBotView(generic.View):
 							#post_facebook_message(sender_id, message_text)
 							send_text = 'YouTube URL not found. Searching for \"' + message_text +'\" on YouTube.'
 							post_facebook_message(sender_id, send_text)
-							
+
 							results = scraper(message_text)
 							if results['views'].__len__() == 0:
 								send_text = 'Sorry, no results found. Please try again!'
