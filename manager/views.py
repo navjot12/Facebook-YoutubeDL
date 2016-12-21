@@ -167,8 +167,9 @@ def post_facebook_list(fbid, results):
 	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
 	                    	"default_action": {
 		                        "type": "web_url",
+		                        "title":"View Video",
 	                        	"url": results['url'][0],
-	                        	"webview_height_ratio": "tall",
+	                        	"webview_height_ratio": "compact",
 	                    	},
 	                    	"buttons": [
 	                        	{
@@ -184,8 +185,9 @@ def post_facebook_list(fbid, results):
 	                		"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
 	                		"default_action": {
 	                			"type": "web_url",
+	                			"title":"View Video",
 	                			"url": results['url'][1],
-	                			"webview_height_ratio": "tall",
+	                			"webview_height_ratio": "compact",
 	                		},
 	                		"buttons": [
 	                			{
