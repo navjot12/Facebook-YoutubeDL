@@ -145,7 +145,7 @@ def handle_quickreply(sender_id, payload):
 	
 	return
 
-def post_facebook_list(fbid, results):
+def post_facebook_list_original(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n\n'
@@ -240,6 +240,133 @@ def post_facebook_list(fbid, results):
 		}
 		response_msg_list['message']['attachment']['payload']['elements'].append(item)
 	'''
+
+	response_msg_list = json.dumps(response_msg_list)
+	
+	print response_msg_list
+	
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
+	print status.json()
+
+	print '$'*25
+	print '\n\n'
+
+def post_facebook_list(fbid, results):
+	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+	
+	print '\n\n'
+	print '$'*25
+
+	response_msg_list = {
+		"recipient":{
+		    "id": fbid
+		},
+		"message": {
+		    "attachment": {
+		        "type": "template",
+		        "payload": {
+		            "template_type": "list",
+		            "elements": [
+		                {
+		                    "title": "Classic T-Shirt Collection",
+		                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+		                    "subtitle": "See all our colors",
+		                    "default_action": {
+		                        "type": "web_url",
+		                        "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
+		                        "messenger_extensions": True,
+		                        "webview_height_ratio": "tall",
+		                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		                    },
+		                    "buttons": [
+		                        {
+		                            "title": "View",
+		                            "type": "web_url",
+		                            "url": "https://peterssendreceiveapp.ngrok.io/collection",
+		                            "messenger_extensions": True,
+		                            "webview_height_ratio": "tall",
+		                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+		                        }
+		                    ]
+		                },
+		                {
+		                    "title": "Classic White T-Shirt",
+		                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+		                    "subtitle": "100 Cotton, 200 Comfortable",
+		                    "default_action": {
+		                        "type": "web_url",
+		                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+		                        "messenger_extensions": True,
+		                        "webview_height_ratio": "tall",
+		                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		                    },
+		                    "buttons": [
+		                        {
+		                            "title": "Shop Now",
+		                            "type": "web_url",
+		                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+		                            "messenger_extensions": True,
+		                            "webview_height_ratio": "tall",
+		                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+		                        }
+		                    ]                
+		                },
+		                {
+		                    "title": "Classic Blue T-Shirt",
+		                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+		                    "subtitle": "100 Cotton, 200 Comfortable",
+		                    "default_action": {
+		                        "type": "web_url",
+		                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+		                        "messenger_extensions": True,
+		                        "webview_height_ratio": "tall",
+		                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		                    },
+		                    "buttons": [
+		                        {
+		                            "title": "Shop Now",
+		                            "type": "web_url",
+		                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+		                            "messenger_extensions": True,
+		                            "webview_height_ratio": "tall",
+		                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+		                        }
+		                    ]                
+		                },
+		                {
+		                    "title": "Classic Black T-Shirt",
+		                    "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
+		                    "subtitle": "100 Cotton, 200 Comfortable",
+		                    "default_action": {
+		                        "type": "web_url",
+		                        "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
+		                        "messenger_extensions": True,
+		                        "webview_height_ratio": "tall",
+		                        "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+		                    },
+		                    "buttons": [
+		                        {
+		                            "title": "Shop Now",
+		                            "type": "web_url",
+		                            "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
+		                            "messenger_extensions": True,
+		                            "webview_height_ratio": "tall",
+		                            "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+		                        }
+		                    ]                
+		                }
+		            ],
+		            "buttons": [
+		                {
+		                    "title": "View More",
+		                    "type": "postback",
+		                    "payload": "payload"                        
+		                }
+		            ]  
+		        }
+		    }
+		}
+	}
 
 	response_msg_list = json.dumps(response_msg_list)
 	
