@@ -163,7 +163,7 @@ def post_facebook_list(fbid, results):
 	                	{
 		                    "title": results['heading'][0],
 		                    "image_url": results['image'][0],
-		                    "subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' and has had ' + results['views'][0],
+		                    "subtitle": results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' with ' + results['views'][0],
 		                    "default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
@@ -189,7 +189,7 @@ def post_facebook_list(fbid, results):
 		item = {
 			"title": results['heading'][i],
 			"image_url": results['image'][i],
-			"subtitle": 'Uploaded by: ' + results['uploader'][i] + ', ' + results['uploaded_on'][i] + ' and has had ' + results['views'][i],
+			"subtitle": results['uploader'][i] + ', ' + results['uploaded_on'][i] + ' with ' + results['views'][i],
 			"buttons": [
 				{
 					"title": "Download",
