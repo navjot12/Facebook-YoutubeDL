@@ -164,7 +164,6 @@ def post_facebook_list(fbid, results):
 		                    "default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
-	                        	"title": 'Check out on Youtube!'
 	                    	},
 		                    "buttons": [
 	                        	{
@@ -190,7 +189,6 @@ def post_facebook_list(fbid, results):
 			"default_action": {
 				"type": "web_url",
 				"url": results['url'][i],
-				"title": 'Check out on Youtube!'
 			},
 			"buttons": [
 				{
