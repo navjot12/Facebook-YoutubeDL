@@ -13,8 +13,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'youtube-download-karega'
-PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
+VERIFY_TOKEN = 'insert-your-own'
+PAGE_ACCESS_TOKEN = 'insert-your-own'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
@@ -391,7 +391,7 @@ class MyChatBotView(generic.View):
 								AV = word.lower()
 
 						if flag_URL == 0:
-							send_text = 'YouTube URL not found. Searching for \"' + message_text +'\" on YouTube.'
+							send_text = 'Searching for \"' + message_text +'\" on YouTube.'
 							post_facebook_message(sender_id, send_text)
 
 							results = scraper(message_text)
