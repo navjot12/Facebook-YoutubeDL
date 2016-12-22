@@ -162,9 +162,11 @@ def post_facebook_list(fbid, results):
 	            	"elements": [
 	                	{
 		                    "title": results['heading'][0],
+		                    "image_url": results['image'][0],
 	                	},
 	                	{
 	                		"title": results['heading'][1],
+	                		"image_url": results['image'][0],
 	                	}
 		            ],
 		        }
