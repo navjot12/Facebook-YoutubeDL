@@ -16,8 +16,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'insert-your-own'
-PAGE_ACCESS_TOKEN = 'insert-your-own'
+VERIFY_TOKEN = 'youtube-download-karega'
+PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
@@ -162,7 +162,7 @@ def post_facebook_list(fbid, results):
 	            	"elements": [
 	                	{
 		                    "title": results['heading'][0],
-	                    	"image_url": results['image'][0],
+	                    '''	"image_url": results['image'][0],
 	                    	#"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
 	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0],
 	                    	"default_action": {
@@ -178,11 +178,11 @@ def post_facebook_list(fbid, results):
 		                            "title": "Download",
 	                            	"payload": results['url'][0]
 	                        	}
-	                    	]
+	                    	]'''
 	                	},
 	                	{
 	                		"title": results['heading'][1],
-	                		"image_url": results['image'][1],
+	                	'''	"image_url": results['image'][1],
 	                		#"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
 	                		"subtitle": 'Uploaded by: ' + results['uploader'][1],
 	                		"default_action": {
@@ -198,10 +198,10 @@ def post_facebook_list(fbid, results):
 	                				"type": "postback",
 	                				"payload": results['url'][1]
 	                			}
-	                		]
+	                		]'''
 	                	}
 		            ],
-		            "buttons": [
+		            '''"buttons": [
 		                {
 		                    "title": "Go To YouTube",
 		                    "type": "web_url",
@@ -210,11 +210,10 @@ def post_facebook_list(fbid, results):
 		                    "webview_height_ratio": "tall",
 		                    "fallback_url": "https://www.facebook.com" 
 		                }
-		            ]  
+		            ]'''  
 		        }
 		    }
 		}
-	    
 	}
 
 	'''
