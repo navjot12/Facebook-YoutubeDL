@@ -205,6 +205,7 @@ def post_facebook_list(fbid, results):
 				}
 			]                
 		}
+		i = i + 1
 		response_msg_list['message']['attachment']['payload']['elements'].append(item)
 
 	response_msg_list = json.dumps(response_msg_list)
