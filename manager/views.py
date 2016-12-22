@@ -54,6 +54,7 @@ def scraper(search):
 			views = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[1].text
 			image = thumbnail.find('span', {'class': 'yt-thumb-simple'}).find('img')['src']
 		except:
+			print 'idhar error hai' + uploader + heading + url
 			continue
 
 		if image.endswith('.gif'):
