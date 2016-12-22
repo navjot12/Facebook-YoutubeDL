@@ -16,15 +16,14 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'youtube-download-karega'
-PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
+VERIFY_TOKEN = 'insert-your-own'
+PAGE_ACCESS_TOKEN = 'insert-your-own'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
-	#search = raw_input('Enter string to search on youtube: ')
 	print '*****'*5
-	print '*****'*6
-	print '\n\nScraper\'s Up!'
+	print '*****'*7
+	print '\n\nScraper Up!'
 
 	for char in search:
 		if not (char.isalnum() or char==' '):
@@ -73,9 +72,9 @@ def scraper(search):
 		COLLECTION['views'].append(views)
 		COLLECTION['image'].append(image)
 	
-	print '\n\nScraper\'s Down!'
+	print '\n\nScraper Down!'
+	print '*****'*7
 	print '*****'*5
-	print '*****'*6
 	return COLLECTION
 
 def set_greeting_text():
@@ -136,7 +135,7 @@ def handle_quickreply(sender_id, payload):
 	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		#post_facebook_audio(sender_id, bestaudio.url)
+		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
@@ -164,7 +163,8 @@ def post_facebook_list(fbid, results):
 	                	{
 		                    "title": results['heading'][0],
 	                    	"image_url": results['image'][0],
-	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
+	                    	#"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
+	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0],
 	                    	"default_action": {
 		                        "type": "web_url",
 	                        	"url": results['url'][0],
@@ -183,7 +183,8 @@ def post_facebook_list(fbid, results):
 	                	{
 	                		"title": results['heading'][1],
 	                		"image_url": results['image'][1],
-	                		"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
+	                		#"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
+	                		"subtitle": 'Uploaded by: ' + results['uploader'][1],
 	                		"default_action": {
 	                			"type": "web_url",
 	                			"url": results['url'][1],
@@ -243,7 +244,6 @@ def post_facebook_list(fbid, results):
 	'''
 
 	response_msg_list = json.dumps(response_msg_list)
-	
 	print response_msg_list
 	
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
@@ -496,7 +496,7 @@ def post_facebook_audio(fbid, url):
 	status = requests.get(post_message_url, files=files)
 	print status'''
 
-def post_facebook_video(fbid, url):
+'''def post_facebook_video(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	response_msg_video = {
 		"recipient":{
@@ -513,7 +513,7 @@ def post_facebook_video(fbid, url):
 	}
 	response_msg_video = json.dumps(response_msg_video)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_video)
-	print status
+	print status'''
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
