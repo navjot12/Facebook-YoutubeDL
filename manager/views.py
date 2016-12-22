@@ -172,25 +172,13 @@ def post_facebook_list(fbid, results):
 	                        	}
 	                    	]
 	                	},
-	                	{
-	                		"title": results['heading'][1],
-	                		"image_url": results['image'][1],
-	                		"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + ' and has had ' + results['views'][1],
-	                		"buttons": [
-	                        	{
-		                            "type": "postback",
-		                            "title": "Download",
-	                            	"payload": results['url'][0]
-	                        	}
-	                    	]
-	                	}
 		            ],
 		        }
 		    }
 		}
 	}
 
-	i = 2
+	i = 1
 	length = results['views'].__len__()
 	while i<4 and i<length:
 		item = {
