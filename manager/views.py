@@ -162,55 +162,11 @@ def post_facebook_list(fbid, results):
 	            	"elements": [
 	                	{
 		                    "title": results['heading'][0],
-	                    '''	"image_url": results['image'][0],
-	                    	#"subtitle": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + 'and has had ' + results['views'][0],
-	                    	"subtitle": 'Uploaded by: ' + results['uploader'][0],
-	                    	"default_action": {
-		                        "type": "web_url",
-	                        	"url": results['url'][0],
-	                        	"messenger_extensions": False,
-	                        	"webview_height_ratio": "compact",
-	                        	"fallback_url": "https://www.youtube.com/"
-	                    	},
-	                    	"buttons": [
-	                        	{
-		                            "type": "postback",
-		                            "title": "Download",
-	                            	"payload": results['url'][0]
-	                        	}
-	                    	]'''
 	                	},
 	                	{
 	                		"title": results['heading'][1],
-	                	'''	"image_url": results['image'][1],
-	                		#"subtitle": 'Uploaded by: ' + results['uploader'][1] + ', ' + results['uploaded_on'][1] + 'and has had ' + results['views'][1],
-	                		"subtitle": 'Uploaded by: ' + results['uploader'][1],
-	                		"default_action": {
-	                			"type": "web_url",
-	                			"url": results['url'][1],
-	                			"messenger_extensions": False,
-	                			"webview_height_ratio": "compact",
-	                			"fallback_url": "https://www.youtube.com/"
-	                		},
-	                		"buttons": [
-	                			{
-	                				"title": "Download",
-	                				"type": "postback",
-	                				"payload": results['url'][1]
-	                			}
-	                		]'''
 	                	}
 		            ],
-		            '''"buttons": [
-		                {
-		                    "title": "Go To YouTube",
-		                    "type": "web_url",
-		                    "url": "https://www.youtube.com",
-		                    "messenger_extensions": False,
-		                    "webview_height_ratio": "tall",
-		                    "fallback_url": "https://www.facebook.com" 
-		                }
-		            ]'''  
 		        }
 		    }
 		}
