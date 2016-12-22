@@ -390,6 +390,7 @@ class MyChatBotView(generic.View):
 				try:
 					if 'postback' in message:
 						post_facebook_quickreply(sender_id, message['postback']['payload'])
+						return
 					else:
 						pass
 				except Exception as e:
