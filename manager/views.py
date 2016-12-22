@@ -371,11 +371,12 @@ class MyChatBotView(generic.View):
 				sender_id = message['sender']['id']
 				try:
 					if 'is_echo' in message['message']:
-						post_facebook_quickreply(sender_id, 'Facebook is conking me in the head.')
+						post_facebook_message(sender_id, 'Facebook is conking me in the head.')
+						return
 				except Exception as e:
 					print e
 					pass
-				
+
 				try:
 					if 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
