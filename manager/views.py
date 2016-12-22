@@ -192,7 +192,7 @@ def post_facebook_list(fbid, results):
 			"subtitle": 'Uploaded by: ' + results['uploader'][i] + ', ' + results['uploaded_on'][i] + ' and has had ' + results['views'][i],
 			"default_action": {
 				"type": "web_url",
-				"url": results['url'][0],
+				"url": results['url'][i],
 				"title": 'Check out on Youtube!'
 			},
 			"buttons": [
