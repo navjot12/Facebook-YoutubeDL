@@ -164,11 +164,6 @@ def post_facebook_list(fbid, results):
 		                    "title": results['heading'][0],
 		                    "image_url": results['image'][0],
 		                    "subtitle": results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' with ' + results['views'][0],
-		                    "default_action": {
-		                        "type": "web_url",
-	                        	"url": results['url'][0],
-	                        	"title": 'Check out on Youtube!'
-	                    	},
 		                    "buttons": [
 	                        	{
 		                            "type": "postback",
