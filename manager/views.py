@@ -79,7 +79,7 @@ def set_greeting_text():
 	response_msg = {
 		"setting_type": "greeting",
 		"greeting":{
-			"text":"If you are on MESSENGER app or www.messenger.com: Just enter the youtube url you wish to download!\nIf you are on browser: Enter \"youtube-url \'audio\'\" or \"youtube-url \'video\'\"."
+			"text":"Hello! Just enter a word relating to which you'd like to search a video on YouTube. If you are on messenger app or www.messenger.com: You can also simply enter the youtube url you wish to download!\nIf you are on browser: Enter \"youtube-url \'audio\'\" or \"youtube-url \'video\'\" to download audio/video of the YouTube video."
 		}
 	}
 	response_msg = json.dumps(response_msg)
@@ -391,8 +391,6 @@ class MyChatBotView(generic.View):
 								AV = word.lower()
 
 						if flag_URL == 0:
-							#message_text = 'Please enter a valid video link to download.'
-							#post_facebook_message(sender_id, message_text)
 							send_text = 'YouTube URL not found. Searching for \"' + message_text +'\" on YouTube.'
 							post_facebook_message(sender_id, send_text)
 
