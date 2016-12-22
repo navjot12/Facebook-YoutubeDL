@@ -125,21 +125,21 @@ def handle_quickreply(sender_id, payload):
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
-		#r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		#post_facebook_video(sender_id, url)
-		#message_text = 'Download Video: ' + str(r.text)
-		#post_facebook_message(sender_id, message_text)
+		message_text = 'Download Video: ' + str(r.text)
+		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
 
 	elif payload.split('!$#@')[0] == 'audio':
 		bestaudio = video.getbestaudio(preftype="m4a")
-		#r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		#post_facebook_audio(sender_id, bestaudio.url)
-		#message_text = 'Download Audio: ' + str(r.text)
-		#post_facebook_message(sender_id, message_text)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		post_facebook_audio(sender_id, bestaudio.url)
+		message_text = 'Download Audio: ' + str(r.text)
+		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
-		#post_facebook_message(sender_id,message_text)
+		post_facebook_message(sender_id,message_text)
 		#post_facebook_file(sender_id, url, video.title)
 	
 	return
@@ -164,6 +164,11 @@ def post_facebook_list(fbid, results):
 		                    "title": results['heading'][0],
 		                    "image_url": results['image'][0],
 		                    "subtitle": results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' with ' + results['views'][0],
+		                    "default_action": {
+		                        "type": "web_url",
+	                        	"url": results['url'][0],
+	                        	"title": 'Check out on Youtube!'
+	                    	},
 		                    "buttons": [
 	                        	{
 		                            "type": "postback",
@@ -185,6 +190,11 @@ def post_facebook_list(fbid, results):
 			"title": results['heading'][i],
 			"image_url": results['image'][i],
 			"subtitle": results['uploader'][i] + ', ' + results['uploaded_on'][i] + ' with ' + results['views'][i],
+			"default_action": {
+				"type": "web_url",
+				"url": results['url'][i],
+				"title": 'Check out on Youtube!'
+			},
 			"buttons": [
 				{
 					"title": "Download",
@@ -360,6 +370,9 @@ class MyChatBotView(generic.View):
 			for message in entry['messaging']:
 				sender_id = message['sender']['id']
 				try:
+					if 'is_echo' in message['message']:
+						post_facebook_quickreply(sender_id, 'Facebook is conking me in the head.')
+				try:
 					if 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
 						return
@@ -379,7 +392,7 @@ class MyChatBotView(generic.View):
 					pass
 
 				try:
-					if 'text' in message['message'] and 'is_echo' not in message['message']:
+					if 'text' in message['message']:
 						message_text = message['message']['text']
 						words = message_text.split(' ')
 						flag_URL = 0
