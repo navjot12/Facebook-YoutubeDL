@@ -369,23 +369,18 @@ class MyChatBotView(generic.View):
 		for entry in incoming_message['entry']:
 			for message in entry['messaging']:
 				sender_id = message['sender']['id']
-				'''try:
+				try:
 					if 'is_echo' in message['message']:
 						post_facebook_message(sender_id, 'Facebook is conking me in the head.')
-						return
-				except Exception as e:
-					print e
-					pass
-				'''
-				try:
-					if 'quick_reply' in message['message']:
+					
+					elif 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
 					
 					elif 'postback' in message:
 						post_facebook_quickreply(sender_id, message['postback']['payload'])
 					
 					elif 'text' in message['message']:
-						message_text = message['message']['text']
+						message_text = message['message']['text'] or ' '
 						words = message_text.split(' ')
 						flag_URL = 0
 						flag_AV = 0
