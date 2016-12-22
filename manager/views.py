@@ -207,7 +207,7 @@ def post_facebook_list(fbid, results):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
 	print status.json()
 
-	print '$'*25
+	print '$'*20
 	print '\n\n'
 
 def post_facebook_button(fbid, results):
