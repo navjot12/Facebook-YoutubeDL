@@ -190,21 +190,13 @@ def post_facebook_list(fbid, results):
 		}
 	}
 
-	'''
 	i = 1
 	length = results['views'].__len__()
 	while i<4 and i<length:
 		item = {
 			"title": results['heading'][i],
 			"image_url": results['image'][i],
-			"subtitle": 'Uploaded by: ' + results['uploader'][i] + ', ' + results['uploaded_on'][i] + 'and has had ' + results['views'][i],
-			"default_action": {
-				"type": "web_url",
-				"url": results['url'][i],
-				"messenger_extensions": False,
-				"webview_height_ratio": "tall",
-				"fallback_url": "https://www.youtube.com/"
-			},
+			"subtitle": 'Uploaded by: ' + results['uploader'][i] + ', ' + results['uploaded_on'][i] + ' and has had ' + results['views'][i],
 			"buttons": [
 				{
 					"title": "Download",
@@ -214,7 +206,6 @@ def post_facebook_list(fbid, results):
 			]                
 		}
 		response_msg_list['message']['attachment']['payload']['elements'].append(item)
-	'''
 
 	response_msg_list = json.dumps(response_msg_list)
 	print response_msg_list
