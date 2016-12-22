@@ -380,25 +380,11 @@ class MyChatBotView(generic.View):
 				try:
 					if 'quick_reply' in message['message']:
 						handle_quickreply(sender_id, message['message']['quick_reply']['payload'])
-						return
-					else:
-						pass
-				except Exception as e:
-					print e
-					pass
-				
-				try:
-					if 'postback' in message:
+					
+					elif 'postback' in message:
 						post_facebook_quickreply(sender_id, message['postback']['payload'])
-						return
-					else:
-						pass
-				except Exception as e:
-					print e
-					pass
-
-				try:
-					if 'text' in message['message']:
+					
+					elif 'text' in message['message']:
 						message_text = message['message']['text']
 						words = message_text.split(' ')
 						flag_URL = 0
