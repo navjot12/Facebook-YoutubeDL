@@ -385,8 +385,7 @@ class MyChatBotView(generic.View):
 						for word in words:
 							if word.startswith('https://') or word.startswith('http://') or word.startswith('www.') or word.startswith('youtu'):
 								flag_URL = 1
-								url = word
-								url.replace("m.you", "you")
+								url = word.replace("m.you", "you")
 							if word.lower() in ['audio','video']:
 								flag_AV = 1
 								AV = word.lower()
