@@ -46,13 +46,13 @@ def scraper(search):
 		thumbnail = video.find('div', {'class': 'yt-lockup-thumbnail contains-addto'})
 		data = video.find('div', {'class': 'yt-lockup-content'})
 		try:
-			uploader = data.find('div', {'class': 'yt-lockup-byline'}).find('a').text.decode('utf-8', 'ignore')
-			heading = data.find_all('h3', {'class': 'yt-lockup-title'})[0].find_all('a')[0].text.decode('utf-8', 'ignore')
-			url = 'https://www.youtube.com' + data.find('h3', {'class': 'yt-lockup-title'}).find('a')['href'].decode('utf-8', 'ignore')
-			duration = data.find('h3', {'class': 'yt-lockup-title'}).find('span').text.decode('utf-8', 'ignore')
-			uploaded_on = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[0].text.decode('utf-8', 'ignore')
-			views = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[1].text.decode('utf-8', 'ignore')
-			image = thumbnail.find('span', {'class': 'yt-thumb-simple'}).find('img')['src'].decode('utf-8', 'ignore')
+			uploader = data.find('div', {'class': 'yt-lockup-byline'}).find('a').text.decode('latin-1', 'ignore')
+			heading = data.find_all('h3', {'class': 'yt-lockup-title'})[0].find_all('a')[0].text.decode('latin-1', 'ignore')
+			url = 'https://www.youtube.com' + data.find('h3', {'class': 'yt-lockup-title'}).find('a')['href'].decode('latin-1', 'ignore')
+			duration = data.find('h3', {'class': 'yt-lockup-title'}).find('span').text.decode('latin-1', 'ignore')
+			uploaded_on = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[0].text.decode('latin-1', 'ignore')
+			views = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[1].text.decode('latin-1', 'ignore')
+			image = thumbnail.find('span', {'class': 'yt-thumb-simple'}).find('img')['src'].decode('latin-1', 'ignore')
 		except Exception as e:
 			print '\n\nError aagya\n'
 			print e
