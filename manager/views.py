@@ -54,13 +54,8 @@ def scraper(search):
 			views = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[1].text.encode('utf-8', 'ignore')
 			image = thumbnail.find('span', {'class': 'yt-thumb-simple'}).find('img')['src'].encode('utf-8', 'ignore')
 		except Exception as e:
-			print '\n\nError aagya\n'
 			print e
-			print '\n\n'
 			continue
-
-		#if image.endswith('.gif'):
-		#	break
 		
 		print heading + '--' + duration + '--' +  uploader + '--' + uploaded_on + '--' + views + '--' + image + '\n'
 
