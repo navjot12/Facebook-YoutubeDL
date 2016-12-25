@@ -292,7 +292,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url": 'https://lh3.googleusercontent.com/AKzJycDKkf1NlqDgGvDmoYrE9KNxbenHK2NgbDTWPp5bfaABULxWKJb62q7pVgSh6us'
+					"url": 'https://cran.r-project.org/web/packages/randtoolbox/vignettes/fullpres.pdf'
 				}
 			}
 		}
