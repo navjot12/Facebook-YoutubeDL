@@ -275,10 +275,8 @@ def post_facebook_audio(fbid, url):
 def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
-	title = title.split('|')[0].split('(')[0].split('.')[0].strip()
-	title = title.replace(' ', '_').replace('\'', '')
-	title = title + '.mp3'
-	print '-----' + title + '-----'
+	url = url + '.mp3'
+	print '-----' + url + '-----'
 	
 	'''cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
@@ -292,7 +290,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url": url+'.mp3'
+					"url": url
 				}
 			}
 		}
