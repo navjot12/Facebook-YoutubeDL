@@ -136,7 +136,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
-		post_facebook_file(sender_id, url, video.title)
+		post_facebook_file(sender_id, bestaudio.url, video.title)
 	
 	return
 
@@ -292,7 +292,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":'https://firebasestorage.googleapis.com/v0/b/youtube-dl-c79a5.appspot.com/o/Cold%20Water.mp3?alt=media&token=d6e32429-4bf2-4d51-8564-03fddcd3b16e'
+					"url":url
 				}
 			}
 		}
