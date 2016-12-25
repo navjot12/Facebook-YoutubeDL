@@ -136,7 +136,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
 		post_facebook_message(sender_id,message_text)
-		post_facebook_file(sender_id, bestaudio.url, video.title)
+		#post_facebook_file(sender_id, bestaudio.url, video.title)
 	
 	return
 
@@ -272,7 +272,7 @@ def post_facebook_audio(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-def post_facebook_file(fbid, url, title):
+'''def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	url = url + '.mp3'
@@ -305,7 +305,7 @@ def post_facebook_file(fbid, url, title):
 	print '*'*25
 	print '\n'*3
 
-'''	files = {
+	files = {
 		'recipient':{
 			"id":fbid
 		},
