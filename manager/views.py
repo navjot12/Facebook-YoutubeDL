@@ -292,7 +292,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url": 'https://cran.r-project.org/web/packages/randtoolbox/vignettes/fullpres.pdf'
+					"url": 'http://sound30.mp3slash.net/320/indian/dangal/01%20-%20Haanikaarak%20Bapu%20-%20Dangal%20[Songspk.GURU].mp3'
 				}
 			}
 		}
