@@ -123,7 +123,6 @@ def handle_quickreply(sender_id, payload):
 	
 	if payload.split('!$#@')[0] == 'video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
-		#post_facebook_video(sender_id, url)
 		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
@@ -137,7 +136,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
 		post_facebook_message(sender_id,message_text)
-		#post_facebook_file(sender_id, url, video.title)
+		post_facebook_file(sender_id, url, video.title)
 	
 	return
 
@@ -273,22 +272,17 @@ def post_facebook_audio(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-'''def post_facebook_file(fbid, url, title):
+def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	title = title.split('|')[0].split('(')[0].split('.')[0].strip()
 	title = title.replace(' ', '_').replace('\'', '')
 	title = title + '.mp3'
 	print '-----' + title + '-----'
-	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
+	
+	'''cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
-
-	os.system('git init')
-	os.system('git config user.email \"singh_navjot75@yahoo.ca\"')
-	os.system('git config user.name \"Navjot Singh\"')
-	os.system('git add '+title)
-	os.system('git commit -m \"'+fbid+' downloaded '+title+'\"')
-	os.system('git push origin master')
+	'''
 	
 	response_msg_file = {
 		"recipient":{
@@ -298,19 +292,18 @@ def post_facebook_audio(fbid, url):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":"https://raw.githubusercontent.com/NSingh12/music/master/"+title
+					"url":'https://firebasestorage.googleapis.com/v0/b/youtube-dl-c79a5.appspot.com/o/Cold%20Water.mp3?alt=media&token=d6e32429-4bf2-4d51-8564-03fddcd3b16e'
 				}
 			}
 		}
 	}
-	os.system('rm '+title)
-	os.system('rm -rf .git')
+	#os.system('rm '+title)
 	
 	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
 
-	files = {
+'''	files = {
 		'recipient':{
 			"id":fbid
 		},
@@ -322,28 +315,7 @@ def post_facebook_audio(fbid, url):
 		},
 		'filedata':str(open(title, 'rb'))
 	}
-
-	print '\n*********\n' + str(files) + '\n*********\n'
 	status = requests.get(post_message_url, files=files)
-	print status'''
-
-'''def post_facebook_video(fbid, url):
-	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
-	response_msg_video = {
-		"recipient":{
-			"id":fbid
-		},
-		"message":{
-			"attachment":{
-				"type":"video",
-				"payload":{
-					"url":url
-				}
-			}
-		}
-	}
-	response_msg_video = json.dumps(response_msg_video)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_video)
 	print status'''
 
 class MyChatBotView(generic.View):
