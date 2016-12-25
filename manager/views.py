@@ -48,6 +48,7 @@ def scraper(search):
 		try:
 			uploader = data.find('div', {'class': 'yt-lockup-byline'}).find('a').text.decode('utf-8', 'strict')
 			heading = data.find_all('h3', {'class': 'yt-lockup-title'})[0].find_all('a')[0].text.decode('utf-8', 'strict')
+			print heading
 			url = 'https://www.youtube.com' + data.find('h3', {'class': 'yt-lockup-title'}).find('a')['href'].decode('utf-8', 'strict')
 			duration = data.find('h3', {'class': 'yt-lockup-title'}).find('span').text.decode('utf-8', 'strict')
 			uploaded_on = data.find('div', {'class': 'yt-lockup-meta'}).find('ul').find_all('li')[0].text.decode('utf-8', 'strict')
