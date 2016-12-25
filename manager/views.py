@@ -59,8 +59,8 @@ def scraper(search):
 			print '\n\n'
 			continue
 
-		if image.endswith('.gif'):
-			break
+		#if image.endswith('.gif'):
+		#	break
 		
 		print heading + '--' + duration + '--' +  uploader + '--' + uploaded_on + '--' + views + '--' + image + '\n'
 
