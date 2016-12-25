@@ -301,7 +301,11 @@ def post_facebook_file(fbid, url, title):
 	
 	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
+	print '\n'*3
+	print '*'*25
 	print status
+	print '*'*25
+	print '\n'*3
 
 '''	files = {
 		'recipient':{
