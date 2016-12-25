@@ -134,7 +134,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
-		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).m4a.\nNOTE: You could also save with .mp3 extension, but m4a provides better quality!'
+		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
 		post_facebook_message(sender_id,message_text)
 		post_facebook_file(sender_id, bestaudio.url, video.title)
 	
@@ -292,7 +292,7 @@ def post_facebook_file(fbid, url, title):
 			"attachment":{
 				"type":"file",
 				"payload":{
-					"url":url
+					"url": 'https://lh3.googleusercontent.com/AKzJycDKkf1NlqDgGvDmoYrE9KNxbenHK2NgbDTWPp5bfaABULxWKJb62q7pVgSh6us'
 				}
 			}
 		}
