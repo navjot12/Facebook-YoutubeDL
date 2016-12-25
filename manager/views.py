@@ -278,9 +278,8 @@ def post_facebook_audio(fbid, url):
 	url = url + '.mp3'
 	print '-----' + url + '-----'
 	
-	'''cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
+	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
 	os.system(cmd)
-	'''
 	
 	response_msg_file = {
 		"recipient":{
