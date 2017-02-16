@@ -24,7 +24,7 @@ def scraper(search):
 
 	for char in search:
 		if not (char.isalnum() or char==' '):
-			search = search.replace(char, '%'+hex(ord(char)).split('0x')[1])
+			search = search.replace(char, '%' + hex(ord(char)).split('0x')[1])
 	search = search.replace(' ', '+')
 	url = url + search
 	print url
@@ -72,12 +72,32 @@ def scraper(search):
 	print '*****'*5
 	return COLLECTION
 
+def scraper2(uid):
+
+	url = 'https://www.yt-download.org/grab?vidID=' + uid + '&format=mp3'
+
+	headers = {
+		'accept' : 'text/html, */*; q=0.01',
+		'accept-encoding' : 'gzip, deflate, sdch, br',
+		'accept-language' : 'en-IN,en-GB;q=0.8,en-US;q=0.6,en;q=0.4',
+		'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; PHPSESSID=s15; _popfired=2; _ga=GA1.2.7205434.1487244483',
+		'referer' : 'https://www.yt-download.org/api-console/' + uid,
+		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
+		'x-requested-with' : 'XMLHttpRequest'
+	}
+
+	r=requests.get(url=url, headers=headers)
+	soup = BS(r.text, "html.parser")
+	soup = soup.find('a')['href']
+	down_url = soup.split('//')[1]
+	return down_url
+
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg = {
 		"setting_type": "greeting",
 		"greeting":{
-			"text":"Hello! Just enter a word relating to which you'd like to search a video on YouTube. If you are on messenger app or www.messenger.com: You can also simply enter the youtube url you wish to download!\nIf you are on browser: Enter \"youtube-url \'audio\'\" or \"youtube-url \'video\'\" to download audio/video of the YouTube video."
+			"text":"Hello! Just enter a word relating to which you'd like to search a video on YouTube. You can also simply enter the youtube url you wish to download! Alternatively, enter \"youtube-url \'audio\'\" or \"youtube-url \'video\'\" to directly download audio/video of the YouTube video."
 		}
 	}
 	response_msg = json.dumps(response_msg)
@@ -127,14 +147,19 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 
 	elif payload.split('!$#@')[0] == 'audio':
-		bestaudio = video.getbestaudio(preftype="m4a")
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		post_facebook_audio(sender_id, bestaudio.url)
-		message_text = 'Download Audio: ' + str(r.text)
-		post_facebook_message(sender_id, message_text)
-		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
-		post_facebook_message(sender_id,message_text)
-		#post_facebook_file(sender_id, bestaudio.url, video.title)
+		try:
+			url2 = url.split('watch?v=')[1]
+			audiolink = scraper2(url2)
+			post_facebook_audio(sender_id, audiolink)
+			#post_facebook_file(sender_id, audiolink, video.title)
+		except:
+			bestaudio = video.getbestaudio(preftype="m4a")
+			r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+			post_facebook_audio(sender_id, bestaudio.url)
+			message_text = 'Download Audio: ' + str(r.text)
+			post_facebook_message(sender_id, message_text)
+			message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
+			post_facebook_message(sender_id,message_text)
 	
 	return
 
@@ -270,52 +295,22 @@ def post_facebook_audio(fbid, url):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
 
-'''def post_facebook_file(fbid, url, title):
+def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
-	url = url + '.mp3'
-	print '-----' + url + '-----'
-	
-	cmd = 'youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --output \"' + title + '\" ' + url
-	os.system(cmd)
-	
-	response_msg_file = {
-		"recipient":{
-			"id": fbid
-		},
-		"message":{
-			"attachment":{
-				"type":"file",
-				"payload":{
-					"url": url
-				}
-			}
-		}
-	}
-	#os.system('rm '+title)
-	
-	response_msg_file = json.dumps(response_msg_file)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
-	print '\n'*3
-	print '*'*25
-	print status
-	print '*'*25
-	print '\n'*3
-
-	files = {
+	files = {					#REDO  THIS FROM FACEBOOK SEND API
 		'recipient':{
 			"id":fbid
 		},
 		'message':{
 			"attachment":{
 				"type":"file",
-				"payload":{}
+				"payload":url
 			}
 		},
-		'filedata':str(open(title, 'rb'))
 	}
 	status = requests.get(post_message_url, files=files)
-	print status'''
+	print status
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
