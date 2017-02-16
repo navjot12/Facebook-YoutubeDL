@@ -18,8 +18,8 @@ PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANq4EEGYD8ON5NDLJMC3QU8ZAkWFARQOWDLQy85vsEVkC1
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
-	print '*****'*5
-	print '*****'*7
+	print '\n'*3
+	print '_'*20
 	print '\n\nScraper Up!'
 
 	for char in search:
@@ -68,11 +68,16 @@ def scraper(search):
 		COLLECTION['image'].append(image)
 	
 	print '\n\nScraper Down!'
-	print '*****'*7
-	print '*****'*5
+	print '_'*20
+	print '\n'*3
 	return COLLECTION
 
 def scraper2(uid):
+
+	print '\n'*3
+	print '_'*20
+	print '\n\nSecondary Scraper Up!'
+
 
 	url = 'https://www.yt-download.org/grab?vidID=' + uid + '&format=mp3'
 
@@ -90,6 +95,11 @@ def scraper2(uid):
 	soup = BS(r.text, "html.parser")
 	soup = soup.find('a')['href']
 	down_url = soup.split('//')[1]
+
+	print down_url
+	print '\n\nSecondary Scraper Down!'
+	print '_'*20
+	print '\n'*3
 	return down_url
 
 def set_greeting_text():
@@ -105,6 +115,11 @@ def set_greeting_text():
 	print status
 
 def post_facebook_quickreply(fbid, url):
+	
+	print '\n'*3
+	print '_'*20
+	print '\n\nPost FB Quickreply!'
+	
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	response_msg_quickreply = {
 		"recipient":{
@@ -129,8 +144,15 @@ def post_facebook_quickreply(fbid, url):
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
+	print '_'*20
+	print '\n'*3
 
 def handle_quickreply(sender_id, payload):
+	
+	print '\n'*3
+	print '_'*20
+	print '\n\nHandling Quickreply!'
+
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	url = payload.split('!$#@')[1]
@@ -160,14 +182,17 @@ def handle_quickreply(sender_id, payload):
 			post_facebook_message(sender_id, message_text)
 			message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
 			post_facebook_message(sender_id,message_text)
-	
+
+	print '_'*20
+	print '\n'*3
 	return
 
 def post_facebook_list(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
-	print '\n\n'
-	print '$'*25
+	print '\n'*3
+	print '_'*20
+	print '\n\nPosting List!'
 
 	response_msg_list = {
 		"recipient":{
@@ -229,8 +254,8 @@ def post_facebook_list(fbid, results):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
 	print status.json()
 
-	print '$'*20
-	print '\n\n'
+	print '_'*20
+	print '\n'*3
 
 def post_facebook_button(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
@@ -263,6 +288,11 @@ def post_facebook_button(fbid, results):
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+	
+	print '\n'*3
+	print '_'*20
+	print '\n\nSending Message!'
+
 	response_msg = {
 		"recipient":{
 			"id":fbid
@@ -274,9 +304,15 @@ def post_facebook_message(fbid, message_text):
 	response_msg = json.dumps(response_msg)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status.json()
+	print '_'*20
+	print '\n'*3
 
 def post_facebook_audio(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+	
+	print '\n'*3
+	print '_'*20
+	print '\n\nSending Audio!'
 
 	response_msg_audio = {
 		"recipient":{
@@ -294,9 +330,15 @@ def post_facebook_audio(fbid, url):
 	response_msg_audio = json.dumps(response_msg_audio)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
 	print status
+	print '_'*20
+	print '\n'*3
 
 def post_facebook_file(fbid, url, title):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
+	
+	print '\n'*3
+	print '_'*20
+	print '\n\nSending Audio!'
 	
 	files = {					#REDO  THIS FROM FACEBOOK SEND API
 		'recipient':{
@@ -311,6 +353,8 @@ def post_facebook_file(fbid, url, title):
 	}
 	status = requests.get(post_message_url, files=files)
 	print status
+	print '_'*20
+	print '\n'*3
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
