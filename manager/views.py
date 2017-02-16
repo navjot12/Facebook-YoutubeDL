@@ -13,8 +13,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'your-verify-token'
-PAGE_ACCESS_TOKEN = 'your-page-access-token'
+VERIFY_TOKEN = 'new_youtube_downloader_12'
+PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANq4EEGYD8ON5NDLJMC3QU8ZAkWFARQOWDLQy85vsEVkC1bpmmkbZCcEOquD5DPZCEIA8oPfAEjRO61hz9IKUgxBEpH1ADhCM00cISgtfLnwBnCZC7JMQ7mDAu6nXvygZCEKgiCSK2d8EkhiKPt6VtInZBc4PcOQZDZD'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
@@ -86,7 +86,7 @@ def scraper2(uid):
 		'accept-encoding' : 'gzip, deflate, sdch, br',
 		'accept-language' : 'en-IN,en-GB;q=0.8,en-US;q=0.6,en;q=0.4',
 		'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; PHPSESSID=s15; _popfired=2; _ga=GA1.2.7205434.1487244483',
-		'referer' : 'https://www.yt-download.org/api-console/' + uid,
+		'referer' : 'https://www.yt-download.org/api-console/audio/' + uid,
 		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
 		'x-requested-with' : 'XMLHttpRequest'
 	}
