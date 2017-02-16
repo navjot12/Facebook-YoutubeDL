@@ -177,10 +177,8 @@ def handle_quickreply(sender_id, payload):
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
 		post_facebook_audio(sender_id, bestaudio.url)
-		message_text = 'Download Audio: ' + str(r.text)
+		message_text = 'Download Audio: ' + str(r.text.split('http://tinyurl.com/')[1])
 		post_facebook_message(sender_id, message_text)
-		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
-		post_facebook_message(sender_id,message_text)
 
 	print '_'*20
 	print '\n'*2
