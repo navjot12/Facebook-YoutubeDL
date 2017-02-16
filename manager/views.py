@@ -94,7 +94,7 @@ def scraper2(uid):
 	r=requests.get(url=url, headers=headers)
 	soup = BS(r.text, "html.parser")
 	soup = soup.find('a')['href']
-	down_url = soup.split('//')[1]
+	down_url = 'https:' + down_url
 
 	print down_url
 	print '\n\nSecondary Scraper Down!'
@@ -175,10 +175,10 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_audio(sender_id, audiolink)
 		
 		bestaudio = video.getbestaudio(preftype="m4a")
-		#r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
 		post_facebook_audio(sender_id, bestaudio.url)
-		#message_text = 'Download Audio: ' + str(r.text.split('http://tinyurl.com/')[1])
-		message_text = 'Download Audio: ' + audiolink
+		message_text = 'Download Audio: ' + str(r.text)
+		#message_text = 'Download Audio: ' + audiolink
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
