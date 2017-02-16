@@ -339,7 +339,7 @@ def post_facebook_file(fbid, url):
 	print '_'*20
 	print '\n\nSending File!'
 	
-	files = {					#REDO  THIS FROM FACEBOOK SEND API
+	response_msg_file = {					#REDO  THIS FROM FACEBOOK SEND API
 		'recipient':{
 			"id":fbid
 		},
@@ -350,7 +350,8 @@ def post_facebook_file(fbid, url):
 			}
 		},
 	}
-	status = requests.get(post_message_url, files=files)
+	response_msg_file = json.dumps(response_msg_file)
+	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
 	print status
 	print '_'*20
 	print '\n'*2
