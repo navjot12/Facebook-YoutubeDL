@@ -94,7 +94,7 @@ def scraper2(uid):
 	r=requests.get(url=url, headers=headers)
 	soup = BS(r.text, "html.parser")
 	soup = soup.find('a')['href']
-	down_url = 'https:' + down_url
+	down_url = 'https:' + soup
 
 	print down_url
 	print '\n\nSecondary Scraper Down!'
