@@ -169,19 +169,18 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 
 	elif payload.split('!$#@')[0] == 'audio':
-		try:
-			url2 = url.split('watch?v=')[1]
-			audiolink = scraper2(url2)
-			post_facebook_audio(sender_id, audiolink)
-			#post_facebook_file(sender_id, audiolink, video.title)
-		except:
-			bestaudio = video.getbestaudio(preftype="m4a")
-			r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-			post_facebook_audio(sender_id, bestaudio.url)
-			message_text = 'Download Audio: ' + str(r.text)
-			post_facebook_message(sender_id, message_text)
-			message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
-			post_facebook_message(sender_id,message_text)
+		url2 = url.split('watch?v=')[1]
+		audiolink = scraper2(url2)
+		post_facebook_file(sender_id, audiolink)
+		post_facebook_audio(sender_id, audiolink)
+		
+		bestaudio = video.getbestaudio(preftype="m4a")
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		post_facebook_audio(sender_id, bestaudio.url)
+		message_text = 'Download Audio: ' + str(r.text)
+		post_facebook_message(sender_id, message_text)
+		message_text = 'Open the link, right click on the audio and while saving, rename it to (anything).mp3'
+		post_facebook_message(sender_id,message_text)
 
 	print '_'*20
 	print '\n'*2
@@ -333,12 +332,12 @@ def post_facebook_audio(fbid, url):
 	print '_'*20
 	print '\n'*2
 
-def post_facebook_file(fbid, url, title):
+def post_facebook_file(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n'*2
 	print '_'*20
-	print '\n\nSending Audio!'
+	print '\n\nSending File!'
 	
 	files = {					#REDO  THIS FROM FACEBOOK SEND API
 		'recipient':{
