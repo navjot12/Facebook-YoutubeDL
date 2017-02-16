@@ -13,8 +13,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'youtube-download-karega'
-PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBADZClxlG8zxcgHdcmzhr87ZC6H3wvWQyypX1666JRcEJwhIk830av89OGoqtkogM0tJS74vQElsMyaKo9i1lG5J0GIAF9nfFQiSeyxjkkWJDRX8ZBdYeFujPujW7DRCjzZA8XGuN7d6o1SbXYLPZBa4kvForUJgZDZD'
+VERIFY_TOKEN = 'new_youtube_downloader_12'
+PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANq4EEGYD8ON5NDLJMC3QU8ZAkWFARQOWDLQy85vsEVkC1bpmmkbZCcEOquD5DPZCEIA8oPfAEjRO61hz9IKUgxBEpH1ADhCM00cISgtfLnwBnCZC7JMQ7mDAu6nXvygZCEKgiCSK2d8EkhiKPt6VtInZBc4PcOQZDZD'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
