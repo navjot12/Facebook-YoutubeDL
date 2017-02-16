@@ -175,7 +175,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_audio(sender_id, audiolink)
 		
 		bestaudio = video.getbestaudio(preftype="m4a")
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
@@ -339,7 +339,7 @@ def post_facebook_file(fbid, url):
 	print '_'*20
 	print '\n\nSending File!'
 	
-	response_msg_file = {					#REDO  THIS FROM FACEBOOK SEND API
+	response_msg_file = {
 		'recipient':{
 			"id":fbid
 		},
