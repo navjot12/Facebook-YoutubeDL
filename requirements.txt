@@ -3,6 +3,6 @@ gunicorn==19.6.0
 pafy==0.5.2
 requests==2.12.4
 urllib3==1.19.1
-youtube-dl==2016.12.18
+youtube-dl==2017.2.16
 beautifulsoup4==4.5.1
 bs4==0.0.1
