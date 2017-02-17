@@ -91,7 +91,7 @@ def scraper2(uid):
 		'x-requested-with' : 'XMLHttpRequest'
 	}
 
-	r=requests.get(url=url, headers=headers)
+	r = requests.get(url=url, headers=headers)
 	soup = BS(r.text, "html.parser")
 	soup = soup.find('a')['href']
 	down_url = 'https:' + soup
@@ -177,7 +177,10 @@ def handle_quickreply(sender_id, payload):
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
 		post_facebook_audio(sender_id, bestaudio.url)
-		message_text = 'Download Audio: ' + str(r.text)
+		message_text = 'Download Audio at 320kbps bitrate: ' + str(r.text)
+		post_facebook_message(sender_id, message_text)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		message_text = 'Download Audio at ' str(bestaudio.bitrate) + 'bps bitrate: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
