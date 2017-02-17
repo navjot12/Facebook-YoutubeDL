@@ -173,11 +173,13 @@ def handle_quickreply(sender_id, payload):
 		audiolink = scraper2(url2)
 		#post_facebook_file(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
 		#post_facebook_audio(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
-		
 		bestaudio = video.getbestaudio(preftype="m4a")
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download Audio at 320kbps bitrate: ' + str(r.text)
+		post_facebook_message(sender_id, message_text)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		message_text = 'Download Audio at 160kbps bitrate: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
