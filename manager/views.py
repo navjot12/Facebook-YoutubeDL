@@ -178,7 +178,7 @@ def handle_quickreply(sender_id, payload):
 		message_text = 'Download audio at 320kbps bitrate: ' + audiolink
 		post_facebook_message(sender_id, message_text)
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		message_text = 'Alternatively, download audio at ' + bestaudio.bitrate' + bps bitrate: ' + str(r.text) + '.\nYou would need to rename this file after download. Importantly, append the extension ".mp3" to the filename!'
+		message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate: ' + str(r.text) + '.\nYou would need to rename this file after download. Importantly, append the extension ".mp3" to the filename!'
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
