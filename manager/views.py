@@ -163,10 +163,13 @@ def handle_quickreply(sender_id, payload):
 	
 	if payload.split('!$#@')[0] == 'video':
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
-		message_text = 'Download Video: ' + str(r.text)
-		post_facebook_message(sender_id, message_text)
-		message_text = 'Open the link, right click or long tap on the video to save it.'
-		post_facebook_message(sender_id, message_text)
+		filestat = post_facebook_file(sender_id, best.url)
+		filestat2 = post_facebook_file(sender_id, str(r.text))
+		if 'Response [200]' not in (str(filestat) or filestat2):
+			message_text = 'Download Video: ' + str(r.text)
+			post_facebook_message(sender_id, message_text)
+			message_text = 'Open the link, right click or long tap on the video to save it.'
+			post_facebook_message(sender_id, message_text)
 
 	elif payload.split('!$#@')[0] == 'audio':
 		
