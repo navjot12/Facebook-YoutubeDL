@@ -170,8 +170,12 @@ def handle_quickreply(sender_id, payload):
 	elif payload.split('!$#@')[0] == 'audio':
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
-		#post_facebook_file(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
-		#post_facebook_audio(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
+		
+		print '^'*15 + '\n'
+		post_facebook_file(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
+		post_facebook_audio(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
+		print '^'*15 + '\n'
+
 		bestaudio = video.getbestaudio(preftype='m4a')
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
