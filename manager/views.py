@@ -321,9 +321,11 @@ def post_facebook_file(fbid, url):
 		'message':{
 			"attachment":{
 				"type":"file",
-				"payload":url
+				"payload":{
+					"url":url
+				}
 			}
-		},
+		}
 	}
 	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
