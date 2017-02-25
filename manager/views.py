@@ -162,10 +162,9 @@ def handle_quickreply(sender_id, payload):
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 		filestat = post_facebook_file(sender_id, best.url)
-		filestat2 = post_facebook_file(sender_id, str(r.text))
-		if 'Response [200]' not in (str(filestat) or filestat2):
+		if 'Response [200]' not in (str(filestat)):
+			r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
 			message_text = 'Download Video: ' + str(r.text)
 			post_facebook_message(sender_id, message_text)
 			message_text = 'Open the link, right click or long tap on the video to save it.'
@@ -176,6 +175,8 @@ def handle_quickreply(sender_id, payload):
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
 		bestaudio = video.getbestaudio(preftype='m4a')
+		print audiolink
+		print bestaudio.url
 
 		audiostat1 = post_facebook_audio(sender_id, audiolink)
 		if 'Response [200]' not in (str(audiostat1)):
