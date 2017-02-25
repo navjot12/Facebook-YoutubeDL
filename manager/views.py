@@ -162,8 +162,7 @@ def handle_quickreply(sender_id, payload):
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
-		message_text = 'Download Video: ' + str(r.text)
+		message_text = 'Download Video: ' + str(best.url)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click on the video to save it.'
 		post_facebook_message(sender_id, message_text)
@@ -175,10 +174,10 @@ def handle_quickreply(sender_id, payload):
 		#post_facebook_audio(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
 		bestaudio = video.getbestaudio(preftype='m4a')
 		post_facebook_audio(sender_id, bestaudio.url)
-		message_text = 'Download audio at 320kbps bitrate: ' + audiolink
+		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
 		post_facebook_message(sender_id, message_text)
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate: ' + str(r.text) + '.\nYou would need to rename this file after download. Importantly, append the "' + bestaudio.extension + '" extension to the filename!'
+		#r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate:\n\n' + str(bestaudio.url) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
@@ -254,35 +253,6 @@ def post_facebook_list(fbid, results):
 
 	print '_'*20
 	print '\n'*3
-
-def post_facebook_button(fbid, results):
-	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
-
-	response_msg_button = {
-	  	"recipient":{
-	    	"id":fbid
-	  	},
-	  	"message":{
-	    	"attachment":{
-	    	  	"type":"template",
-	    	  	"payload":{
-		        	"template_type": "button",
-	        		"text": results['heading'][0],
-	        		"buttons":[
-		          		{
-		            		"type": "postback",
-		            		"title": 'Uploaded by: ' + results['uploader'][0] + ', ' + results['uploaded_on'][0] + ' with ' + results['views'][0],
-		            		"payload": results['url'][0]
-		          		}
-	       			]
-	    		}
-	    	}
-	  	}
-	}
-	
-	response_msg_button = json.dumps(response_msg_button)
-	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_button)
-	print status.json()
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
@@ -392,7 +362,7 @@ class MyChatBotView(generic.View):
 						AV = ''
 
 						for word in words:
-							if word.startswith('https://') or word.startswith('http://') or word.startswith('www.') or word.startswith('youtu'):
+							if word.startswith('https://' or 'http://' or 'www.' or 'youtu'):
 								flag_URL = 1
 								url = word.replace("m.you", "you")
 							if word.lower() in ['audio','video']:
@@ -409,7 +379,6 @@ class MyChatBotView(generic.View):
 								post_facebook_message(sender_id, send_text)
 							else:
 								post_facebook_list(sender_id, results)
-							
 
 						elif flag_URL == 1 and flag_AV == 0:
 							post_facebook_quickreply(sender_id, url)
@@ -423,7 +392,6 @@ class MyChatBotView(generic.View):
 
 				except Exception as e:
 					print e
-					pass
 
 		return HttpResponse()
 
