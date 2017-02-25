@@ -172,17 +172,29 @@ def handle_quickreply(sender_id, payload):
 		
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
-		print 'Sending High Quality File & Audio from: ' + audiolink
-		filestat1 = post_facebook_file(sender_id, audiolink)
-		#if 'Response [200]' in (str(filestat1)):
-		audiostat1 = post_facebook_audio(sender_id, audiolink)
-			
-		#else:
 		bestaudio = video.getbestaudio(preftype='m4a')
-		print 'Sending Low Quality File & Audio from: ' + bestaudio.url
-		filestat2 = post_facebook_file(sender_id, bestaudio.url)
-		audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
 
+		audiostat1 = post_facebook_audio(sender_id, audiolink)
+		if 'Response [200]' not in (str(audiostat1)):
+			audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
+
+		message_text = 'Download audio at 320kbps bitrate:'
+		post_facebook_message(sender_id, message_text)	
+		filestat1 = post_facebook_file(sender_id, audiolink)
+		
+		if 'Response [200]' not in (str(filestat1)):
+
+			message_text = audiolink
+			post_facebook_message(sender_id, message_text)
+			
+			message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate:'
+			post_facebook_message(sender_id, message_text)
+			filestat2 = post_facebook_file(sender_id, bestaudio.url)
+			
+			if 'Response [200]' not in (str(filestat2)):
+				r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+				message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+				post_facebook_message(sender_id, message_text)
 		
 		'''
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
@@ -304,7 +316,7 @@ def post_facebook_audio(fbid, url):
 			"attachment":{
 		    	"type":"audio",
 		    	"payload":{
-		        	"url": url
+		        	"url":url
 		      	}
 		    }
 		}
