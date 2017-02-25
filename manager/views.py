@@ -171,26 +171,24 @@ def handle_quickreply(sender_id, payload):
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
 		
+		print '\n'*2
+		print '$'*15
+
+		print 'Sending High Quality File & Audio'
 		filestat1 = post_facebook_file(sender_id, audiolink)
+		#if 'Response [200]' in (str(filestat1)):
 		audiostat1 = post_facebook_audio(sender_id, audiolink)
+		print filestat1, audiostat1
+			
+		#else:
+		print 'Sending Low Quality File & Audio'
+		bestaudio = video.getbestaudio(preftype='m4a')
+		filestat2 = post_facebook_file(sender_id, audiolink)
+		audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
+		print filestat2, audiostat2
 
-		if 'Response [200]' not in (str(filestat1) and (audiostat1)):
-			print '\n'*3
-			print '$'*15
-			print 'File/Audio sending failed'
-			print filestat1
-			print filestat2
-			print 'Sending Low Quality File/Audio'
-
-			bestaudio = video.getbestaudio(preftype='m4a')
-			filestat2 = post_facebook_file(sender_id, audiolink)
-			audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
-
-			if 'Response [200]' not in (str(filestat2) and (audiostat2)):
-				print 'Low Quality File/Audio sending also failed'
-
-			print '$'*15
-			print '\n'*3
+		print '$'*15
+		print '\n'*2
 		
 		'''
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
