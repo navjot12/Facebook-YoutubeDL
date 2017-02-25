@@ -171,13 +171,28 @@ def handle_quickreply(sender_id, payload):
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
 		
-		print '^'*15 + '\n'
-		post_facebook_file(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
-		post_facebook_audio(sender_id, audiolink)			#Don't know why this isn't working, sending a legit audio file
-		print '^'*15 + '\n'
+		filestat1 = post_facebook_file(sender_id, audiolink)
+		audiostat1 = post_facebook_audio(sender_id, audiolink)
 
-		bestaudio = video.getbestaudio(preftype='m4a')
-		post_facebook_audio(sender_id, bestaudio.url)
+		if 'Response [200]' not in (str(filestat1) and (audiostat1)):
+			print '\n'*3
+			print '$'*15
+			print 'File/Audio sending failed'
+			print filestat1
+			print filestat2
+			print 'Sending Low Quality File/Audio'
+
+			bestaudio = video.getbestaudio(preftype='m4a')
+			filestat2 = post_facebook_file(sender_id, audiolink)
+			audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
+
+			if 'Response [200]' not in (str(filestat2) and (audiostat2)):
+				print 'Low Quality File/Audio sending also failed'
+
+			print '$'*15
+			print '\n'*3
+		
+		'''
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
 		post_facebook_message(sender_id, message_text)
 		#r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
@@ -185,6 +200,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'After downloading, you would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 		post_facebook_message(sender_id, message_text)
+		'''
 
 	print '_'*20
 	print '\n'*2
@@ -306,6 +322,7 @@ def post_facebook_audio(fbid, url):
 	print status
 	print '_'*20
 	print '\n'*2
+	return status
 
 def post_facebook_file(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
@@ -332,6 +349,7 @@ def post_facebook_file(fbid, url):
 	print status
 	print '_'*20
 	print '\n'*2
+	return status
 
 class MyChatBotView(generic.View):
 	def get (self, request, *args, **kwargs):
