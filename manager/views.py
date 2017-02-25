@@ -162,7 +162,8 @@ def handle_quickreply(sender_id, payload):
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
-		message_text = 'Download Video: ' + str(best.url)
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
+		message_text = 'Download Video: ' + str(r.text)
 		post_facebook_message(sender_id, message_text)
 		message_text = 'Open the link, right click or long tap on the video to save it.'
 		post_facebook_message(sender_id, message_text)
@@ -174,18 +175,16 @@ def handle_quickreply(sender_id, payload):
 		print '\n'*2
 		print '$'*15
 
-		print 'Sending High Quality File & Audio'
+		print 'Sending High Quality File & Audio from: ' + audiolink
 		filestat1 = post_facebook_file(sender_id, audiolink)
 		#if 'Response [200]' in (str(filestat1)):
 		audiostat1 = post_facebook_audio(sender_id, audiolink)
-		print filestat1, audiostat1
 			
 		#else:
-		print 'Sending Low Quality File & Audio'
+		print 'Sending Low Quality File & Audio from: ' + bestaudio.url
 		bestaudio = video.getbestaudio(preftype='m4a')
-		filestat2 = post_facebook_file(sender_id, audiolink)
+		filestat2 = post_facebook_file(sender_id, bestaudio.url)
 		audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
-		print filestat2, audiostat2
 
 		print '$'*15
 		print '\n'*2
