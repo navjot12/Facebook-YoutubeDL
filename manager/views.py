@@ -169,25 +169,20 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 
 	elif payload.split('!$#@')[0] == 'audio':
+		
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
-		
-		print '\n'*2
-		print '$'*15
-
 		print 'Sending High Quality File & Audio from: ' + audiolink
 		filestat1 = post_facebook_file(sender_id, audiolink)
 		#if 'Response [200]' in (str(filestat1)):
 		audiostat1 = post_facebook_audio(sender_id, audiolink)
 			
 		#else:
-		print 'Sending Low Quality File & Audio from: ' + bestaudio.url
 		bestaudio = video.getbestaudio(preftype='m4a')
+		print 'Sending Low Quality File & Audio from: ' + bestaudio.url
 		filestat2 = post_facebook_file(sender_id, bestaudio.url)
 		audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
 
-		print '$'*15
-		print '\n'*2
 		
 		'''
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
