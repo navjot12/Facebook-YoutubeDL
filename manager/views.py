@@ -178,12 +178,10 @@ def handle_quickreply(sender_id, payload):
 		print audiolink
 		print bestaudio.url
 
-		audiostat1 = post_facebook_audio(sender_id, audiolink)
-		if 'Response [200]' not in (str(audiostat1)):
-			audiostat2 = post_facebook_audio(sender_id, bestaudio.url)
-
+		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download audio at 320kbps bitrate:'
 		post_facebook_message(sender_id, message_text)	
+		
 		filestat1 = post_facebook_file(sender_id, audiolink)
 		
 		if 'Response [200]' not in (str(filestat1)):
