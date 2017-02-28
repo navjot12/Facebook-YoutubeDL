@@ -156,12 +156,18 @@ def handle_quickreply(sender_id, payload):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	url = payload.split('!$#@')[1]
-	video = pafy.new(url)
-	best = video.getbest()
+	try:
+		video = pafy.new(url)
+	except:
+		message_text = 'Please check the video URL!'
+		post_facebook_message(sender_id, message_text)	
+		return
+
 	message_text = video.title + '\t(' + video.duration + ')'
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
+		best = video.getbest()
 		filestat = post_facebook_file(sender_id, best.url)
 		if 'Response [200]' not in (str(filestat)):
 			r = requests.get('http://tinyurl.com/api-create.php?url=' + best.url)
@@ -394,7 +400,7 @@ class MyChatBotView(generic.View):
 						AV = ''
 
 						for word in words:
-							if word.startswith('https://' or 'http://' or 'www.' or 'youtu'):
+							if word.startswith('https://' or 'http://' or 'www.' or 'youtu' or 'm.youtube'):
 								flag_URL = 1
 								url = word.replace("m.you", "you")
 							if word.lower() in ['audio','video']:
