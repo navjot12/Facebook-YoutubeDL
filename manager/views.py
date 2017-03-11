@@ -13,8 +13,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'insert-your-own'
-PAGE_ACCESS_TOKEN = 'insert-your-own'
+VERIFY_TOKEN = 'new_youtube_downloader_12'
+PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANq4EEGYD8ON5NDLJMC3QU8ZAkWFARQOWDLQy85vsEVkC1bpmmkbZCcEOquD5DPZCEIA8oPfAEjRO61hz9IKUgxBEpH1ADhCM00cISgtfLnwBnCZC7JMQ7mDAu6nXvygZCEKgiCSK2d8EkhiKPt6VtInZBc4PcOQZDZD'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
@@ -204,7 +204,7 @@ def handle_quickreply(sender_id, payload):
 				message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 				post_facebook_message(sender_id, message_text)
 		
-		'''
+		
 		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
 		post_facebook_message(sender_id, message_text)
 		#r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
@@ -212,7 +212,7 @@ def handle_quickreply(sender_id, payload):
 		post_facebook_message(sender_id, message_text)
 		message_text = 'After downloading, you would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 		post_facebook_message(sender_id, message_text)
-		'''
+		
 
 	print '_'*20
 	print '\n'*2
