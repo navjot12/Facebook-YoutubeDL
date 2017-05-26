@@ -6,11 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 import json
+import pafy
 import os
 import sys
 import time
 import requests
-import pafy
 from bs4 import BeautifulSoup as BS
 
 VERIFY_TOKEN = 'new_youtube_downloader_12'
