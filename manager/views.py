@@ -27,7 +27,9 @@ def scraper(search):
 			search = search.replace(char, '%' + hex(ord(char)).split('0x')[1])
 	search = search.replace(' ', '+')
 	url = url + search
+
 	print url
+	
 	r=requests.get(url)
 	soup=BS(r.text, "html.parser")
 	links = soup.find_all('div', {'class': 'yt-lockup yt-lockup-tile yt-lockup-video clearfix'})
@@ -158,7 +160,7 @@ def handle_quickreply(sender_id, payload):
 	try:
 		video = pafy.new(url)
 	except:
-		message_text = 'Please check the video URL!'
+		message_text = 'Please check the video URL!', url
 		post_facebook_message(sender_id, message_text)	
 		return
 
