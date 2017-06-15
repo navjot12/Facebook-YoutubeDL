@@ -14,7 +14,7 @@ import pafy
 from bs4 import BeautifulSoup as BS
 
 VERIFY_TOKEN = 'new_youtube_downloader_12'
-PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANq4EEGYD8ON5NDLJMC3QU8ZAkWFARQOWDLQy85vsEVkC1bpmmkbZCcEOquD5DPZCEIA8oPfAEjRO61hz9IKUgxBEpH1ADhCM00cISgtfLnwBnCZC7JMQ7mDAu6nXvygZCEKgiCSK2d8EkhiKPt6VtInZBc4PcOQZDZD'
+PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANUMovJvSeiC9VK8zmDUluq96MTjWqohJV57qYZAT5P12der2z9PqswHRVgGwZB7eGl3kmdKHhUGffhUWcLVPn5rSVJPcZCkUxCoAYtJ0XoqHFM1ryAHxFSB3uMKphL0jXMz9ZBoyXXFdYZBvPVbgSRHshUuEngzMh2LpsLA0'
 
 def scraper(search):
 	url = "https://www.youtube.com/results?search_query="
