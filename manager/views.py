@@ -76,10 +76,9 @@ def scraper2(uid):
 
 	print '\n'*2
 	print '_'*20
-	print '\n\nSecondary Scraper Up!'
-
 
 	url = 'https://www.yt-download.org/grab?vidID=' + uid + '&format=mp3'
+	print '\n\nSecondary Scraper Up! Scraping:', url
 
 	headers = {
 		'accept' : 'text/html, */*; q=0.01',
