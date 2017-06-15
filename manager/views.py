@@ -185,6 +185,8 @@ def handle_quickreply(sender_id, payload):
 			print audiolink
 			message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
 			post_facebook_message(sender_id, message_text)
+		except:
+			pass
 		
 		bestaudio = video.getbestaudio(preftype='m4a')
 		print bestaudio.url
