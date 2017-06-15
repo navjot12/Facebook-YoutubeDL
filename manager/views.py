@@ -180,9 +180,13 @@ def handle_quickreply(sender_id, payload):
 	elif payload.split('!$#@')[0] == 'audio':
 		
 		url2 = url.split('watch?v=')[1]
-		audiolink = scraper2(url2)
+		try:
+			audiolink = scraper2(url2)
+			print audiolink
+			message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
+			post_facebook_message(sender_id, message_text)
+		
 		bestaudio = video.getbestaudio(preftype='m4a')
-		print audiolink
 		print bestaudio.url
 
 		'''
@@ -207,10 +211,9 @@ def handle_quickreply(sender_id, payload):
 				post_facebook_message(sender_id, message_text)
 		
 		'''
-		message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
-		post_facebook_message(sender_id, message_text)
+
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate:\n\n' + str(r.text) + '\n\nAfter downloading, you would need to rename this file. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+		message_text = 'Download audio at ' + bestaudio.bitrate + 'bps bitrate:\n\n' + str(r.text) + '\n\nAfter downloading, you would need to rename this file. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
