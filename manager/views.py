@@ -165,6 +165,7 @@ def handle_quickreply(sender_id, payload):
 		return
 
 	message_text = video.title + '\t(' + video.duration + ')'
+	print message_text
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
