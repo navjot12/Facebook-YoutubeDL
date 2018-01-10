@@ -91,10 +91,14 @@ def scraper2(uid):
 		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
 		'x-requested-with' : 'XMLHttpRequest'
 	}
+	try:
+		r = requests.get(url=url, headers=headers)
+		soup = BS(r.text, "html.parser")
+		soup = soup.find('a')['href']
+	except:
+		print 'Secondary Scraper has failed!'
+		return '-'
 
-	r = requests.get(url=url, headers=headers)
-	soup = BS(r.text, "html.parser")
-	soup = soup.find('a')['href']
 	down_url = 'https:' + soup
 
 	print down_url, 'READY FOR DOWNLOAD!'
@@ -179,41 +183,30 @@ def handle_quickreply(sender_id, payload):
 
 	elif payload.split('!$#@')[0] == 'audio':
 		
-		url2 = url.split('watch?v=')[1]
-		try:
-			audiolink = scraper2(url2)
-			print audiolink
-			message_text = 'Download audio at 320kbps bitrate:\n\n' + audiolink
-			post_facebook_message(sender_id, message_text)
-		except:
-			pass
-		
 		bestaudio = video.getbestaudio(preftype='m4a')
-		print bestaudio.url
-
-		post_facebook_audio(sender_id, bestaudio.url)
-		message_text = 'Download audio at 320kbps bitrate:'
-		post_facebook_message(sender_id, message_text)	
+		print 'Pafy audio url:', bestaudio.url
 		
-		filestat1 = post_facebook_file(sender_id, audiolink)
-		
-		if 'Response [200]' not in (str(filestat1)):
+		url2 = url.split('watch?v=')[1]
+		audiolink = scraper2(url2)
+		if audiolink is not '-':
+			post_facebook_audio(sender_id, audiolink)
+			message_text = 'Download audio at 320kbps bitrate:'
+			post_facebook_message(sender_id, message_text)
+			filestat1 = post_facebook_file(sender_id, audiolink)
 
-			message_text = audiolink
-			post_facebook_message(sender_id, message_text)
-			
-			message_text = 'Alternatively, download audio at ' + bestaudio.bitrate + 'bps bitrate:'
-			post_facebook_message(sender_id, message_text)
-			filestat2 = post_facebook_file(sender_id, bestaudio.url)
-			
-			if 'Response [200]' not in (str(filestat2)):
-				r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-				message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+			if 'Response [200]' not in (str(filestat1)):
+				r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
+				message_text = str(r.text)
 				post_facebook_message(sender_id, message_text)
-
-		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-		message_text = 'Download audio at ' + bestaudio.bitrate + 'bps bitrate:\n\n' + str(r.text) + '\n\nAfter downloading, you would need to rename this file. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+				
+		message_text = 'Download audio at ' + bestaudio.bitrate + 'bps bitrate:'
 		post_facebook_message(sender_id, message_text)
+		filestat2 = post_facebook_file(sender_id, bestaudio.url)
+				
+		if 'Response [200]' not in (str(filestat2)):
+			r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+			message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+			post_facebook_message(sender_id, message_text)
 
 	print '_'*20
 	print '\n'*2
