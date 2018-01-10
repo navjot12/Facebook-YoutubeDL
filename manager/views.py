@@ -84,13 +84,14 @@ def scraper2(uid):
 
 	headers = {
 		'accept' : 'text/html, */*; q=0.01',
-		'accept-encoding' : 'gzip, deflate, sdch, br',
-		'accept-language' : 'en-IN,en-GB;q=0.8,en-US;q=0.6,en;q=0.4',
-		'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; _ga=GA1.2.7205434.1487244483; _gid=GA1.2.452623598.1515582281; PHPSESSID=s1; _gat=1',
+		#'accept-encoding' : 'gzip, deflate, sdch, br',
+		#'accept-language' : 'en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+		#'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; _ga=GA1.2.7205434.1487244483; _gid=GA1.2.452623598.1515582281; PHPSESSID=s1; _gat=1',
 		'referer' : 'https://www.yt-download.org/@api/button/mp3/' + uid,
-		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
+		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
 		'x-requested-with' : 'XMLHttpRequest'
 	}
+
 	try:
 		r = requests.get(url=url, headers=headers)
 		soup = BS(r.text, "html.parser")
@@ -99,13 +100,11 @@ def scraper2(uid):
 		print 'Secondary Scraper has failed!'
 		return '-'
 
-	down_url = 'https:' + soup
-
-	print down_url, 'READY FOR DOWNLOAD!'
+	print soup, 'READY FOR DOWNLOAD!'
 	print '\n\nSecondary Scraper Down!'
 	print '_'*20
 	print '\n'*2
-	return down_url
+	return soup
 
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
@@ -190,7 +189,7 @@ def handle_quickreply(sender_id, payload):
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
 		if audiolink is not '-':
-			# post_facebook_audio(sender_id, audiolink)
+			post_facebook_audio(sender_id, audiolink)
 			message_text = 'Download audio at 320kbps bitrate:'
 			post_facebook_message(sender_id, message_text)
 			filestat1 = post_facebook_file(sender_id, audiolink)
@@ -206,7 +205,7 @@ def handle_quickreply(sender_id, payload):
 				
 		if 'Response [200]' not in (str(filestat2)):
 			r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-			message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
+			message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, ensure the file extension is .mp3!'
 			post_facebook_message(sender_id, message_text)
 
 	print '_'*20
