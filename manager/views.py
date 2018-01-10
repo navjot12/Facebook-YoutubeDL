@@ -190,7 +190,7 @@ def handle_quickreply(sender_id, payload):
 		url2 = url.split('watch?v=')[1]
 		audiolink = scraper2(url2)
 		if audiolink is not '-':
-			post_facebook_audio(sender_id, audiolink)
+			# post_facebook_audio(sender_id, audiolink)
 			message_text = 'Download audio at 320kbps bitrate:'
 			post_facebook_message(sender_id, message_text)
 			filestat1 = post_facebook_file(sender_id, audiolink)
