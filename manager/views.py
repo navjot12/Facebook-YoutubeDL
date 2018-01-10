@@ -100,11 +100,12 @@ def scraper2(uid):
 		print 'Secondary Scraper has failed!'
 		return '-'
 
-	print soup, 'READY FOR DOWNLOAD!'
+	down_url = 'https:' + soup
+	print down_url, 'READY FOR DOWNLOAD!'
 	print '\n\nSecondary Scraper Down!'
 	print '_'*20
 	print '\n'*2
-	return soup
+	return down_url
 
 def set_greeting_text():
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
