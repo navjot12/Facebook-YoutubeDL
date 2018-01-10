@@ -160,13 +160,15 @@ def handle_quickreply(sender_id, payload):
 	print 'URL Found:', url
 	try:
 		video = pafy.new(url)
+		print 'Made pafy object'
 	except:
 		message_text = 'Please check the video URL!', url
+		print 'Pafy object not made ugh'
 		post_facebook_message(sender_id, message_text)	
 		return
 
 	message_text = video.title + '\t(' + video.duration + ')'
-	print message_text
+	print message_text, 'to be sent'
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
