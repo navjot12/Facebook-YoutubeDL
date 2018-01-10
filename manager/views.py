@@ -17,11 +17,10 @@ VERIFY_TOKEN = 'new_youtube_downloader_12'
 PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANUMovJvSeiC9VK8zmDUluq96MTjWqohJV57qYZAT5P12der2z9PqswHRVgGwZB7eGl3kmdKHhUGffhUWcLVPn5rSVJPcZCkUxCoAYtJ0XoqHFM1ryAHxFSB3uMKphL0jXMz9ZBoyXXFdYZBvPVbgSRHshUuEngzMh2LpsLA0'
 
 def scraper(search):
-	url = "https://www.youtube.com/results?search_query="
 	print '\n'*2
-	print '_'*20
-	print '\n\nScraper Up!'
+	print 'SCRAPER-YT '*10
 
+	url = "https://www.youtube.com/results?search_query="
 	for char in search:
 		if not (char.isalnum() or char==' '):
 			search = search.replace(char, '%' + hex(ord(char)).split('0x')[1])
@@ -30,8 +29,8 @@ def scraper(search):
 
 	print url
 	
-	r=requests.get(url)
-	soup=BS(r.text, "html.parser")
+	r = requests.get(url)
+	soup = BS(r.text, "html.parser")
 	links = soup.find_all('div', {'class': 'yt-lockup yt-lockup-tile yt-lockup-video clearfix'})
 	videos = soup.find_all('div', {'class' : 'yt-lockup-dismissable yt-uix-tile'})
 	
@@ -69,18 +68,16 @@ def scraper(search):
 		COLLECTION['views'].append(views)
 		COLLECTION['image'].append(image)
 	
-	print '\n\nScraper Down!'
+	print '\n\nSCRAPER-YT Down!'
 	print '_'*20
-	print '\n'*2
 	return COLLECTION
 
 def scraper2(uid):
-
 	print '\n'*2
-	print '_'*20
+	print 'SCRAPER-DL '*10
 
 	url = 'https://www.yt-download.org/@grab?vidID=' + uid + '&format=mp3&streams=mp3&api=button'
-	print '\n\nSecondary Scraper Up! Scraping:', url
+	print 'Scraping:', url
 
 	headers = {
 		'accept' : 'text/html, */*; q=0.01',
@@ -102,12 +99,14 @@ def scraper2(uid):
 
 	down_url = 'https:' + soup
 	print down_url, 'READY FOR DOWNLOAD!'
-	print '\n\nSecondary Scraper Down!'
+
+	print '\n\nSCRAPER-DL Down!'
 	print '_'*20
-	print '\n'*2
 	return down_url
 
 def set_greeting_text():
+	print '\n'*2
+	print 'GREETINGS '*10
 	post_message_url = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%PAGE_ACCESS_TOKEN
 	response_msg = {
 		"setting_type": "greeting",
@@ -118,12 +117,13 @@ def set_greeting_text():
 	response_msg = json.dumps(response_msg)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status
+	print '\n\nGREETING text set.'
+	print '_'*20
 
 def post_facebook_quickreply(fbid, url):
 	
 	print '\n'*2
-	print '_'*20
-	print '\n\nPost FB Quickreply!'
+	print 'OFFER-QUICKREPLY '*10
 	
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	response_msg_quickreply = {
@@ -149,14 +149,14 @@ def post_facebook_quickreply(fbid, url):
 	response_msg_quickreply = json.dumps(response_msg_quickreply)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_quickreply)
 	print status.json()
+	print '\n\nQUICKREPLY offered.'
 	print '_'*20
-	print '\n'*2
 
 def handle_quickreply(sender_id, payload):
 	
 	print '\n'*2
-	print '_'*20
-	print '\n\nHandling Quickreply!'
+	print '*'*20
+	print 'HANDLE-QUICKREPLY '*10
 
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
@@ -209,16 +209,14 @@ def handle_quickreply(sender_id, payload):
 		message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, ensure the file extension is .mp3!'
 		post_facebook_message(sender_id, message_text)
 
+	print '\n\nQUICKREPLY HANDLED'
 	print '_'*20
-	print '\n'*2
-	return
 
 def post_facebook_list(fbid, results):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
-	print '\n'*3
-	print '_'*20
-	print '\n\nPosting List!'
+	print '\n'*2
+	print 'POSTING-LIST '
 
 	response_msg_list = {
 		"recipient":{
@@ -280,15 +278,14 @@ def post_facebook_list(fbid, results):
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_list)
 	print status.json()
 
+	print '\n\nPOSTED LIST'
 	print '_'*20
-	print '\n'*3
 
 def post_facebook_message(fbid, message_text):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n'*2
-	print '_'*20
-	print '\n\nSending Message!'
+	print 'SENDING MESSAGE '*5
 
 	response_msg = {
 		"recipient":{
@@ -301,15 +298,15 @@ def post_facebook_message(fbid, message_text):
 	response_msg = json.dumps(response_msg)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg)
 	print status.json()
+	print '\n\nMESSAGE SENT'
 	print '_'*20
-	print '\n'*2
 
 def post_facebook_audio(fbid, url):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	print '\n'*2
 	print '_'*20
-	print '\n\nSending Audio!'
+	print '\n\nSENDING AUDIO'*5
 
 	response_msg_audio = {
 		"recipient":{
@@ -326,9 +323,9 @@ def post_facebook_audio(fbid, url):
 	}
 	response_msg_audio = json.dumps(response_msg_audio)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_audio)
-	print status
+	print status.json
+	print '\n\nAUDIO SENT'
 	print '_'*20
-	print '\n'*2
 	return status
 
 def post_facebook_file(fbid, url):
@@ -336,7 +333,7 @@ def post_facebook_file(fbid, url):
 	
 	print '\n'*2
 	print '_'*20
-	print '\n\nSending File!'
+	print '\n\nSENDING FILE'*5
 	
 	response_msg_file = {
 		'recipient':{
@@ -353,9 +350,9 @@ def post_facebook_file(fbid, url):
 	}
 	response_msg_file = json.dumps(response_msg_file)
 	status = requests.post(post_message_url, headers={"Content-Type": "application/json"}, data=response_msg_file)
-	print status
+	print status.json
+	print '\n\nFILE SENT'
 	print '_'*20
-	print '\n'*2
 	return status
 
 class MyChatBotView(generic.View):
