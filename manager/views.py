@@ -157,14 +157,13 @@ def handle_quickreply(sender_id, payload):
 	post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'%PAGE_ACCESS_TOKEN
 	
 	url = payload.split('!$#@')[1]
-	print 'URL Found:', url
 	try:
 		video = pafy.new(url)
-		print 'Made pafy object'
+		print 'Successfully made pafy object'
 	except:
-		message_text = 'Please check the video URL!', url
+		message_text = 'Please check the video URL!' + str(url)
 		print 'Pafy object not made ugh'
-		post_facebook_message(sender_id, message_text)	
+		post_facebook_message(sender_id, message_text)
 		return
 
 	message_text = video.title + '\t(' + video.duration + ')'
