@@ -13,8 +13,8 @@ import requests
 import pafy
 from bs4 import BeautifulSoup as BS
 
-VERIFY_TOKEN = 'new_youtube_downloader_12'
-PAGE_ACCESS_TOKEN = 'EAAO5LXdwYSwBANUMovJvSeiC9VK8zmDUluq96MTjWqohJV57qYZAT5P12der2z9PqswHRVgGwZB7eGl3kmdKHhUGffhUWcLVPn5rSVJPcZCkUxCoAYtJ0XoqHFM1ryAHxFSB3uMKphL0jXMz9ZBoyXXFdYZBvPVbgSRHshUuEngzMh2LpsLA0'
+VERIFY_TOKEN = 'insert-your-own'
+PAGE_ACCESS_TOKEN = 'insert-your-own'
 
 def scraper(search):
 	print '\n'*2
