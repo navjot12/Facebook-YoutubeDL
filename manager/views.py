@@ -193,21 +193,21 @@ def handle_quickreply(sender_id, payload):
 			# post_facebook_audio(sender_id, audiolink)
 			message_text = 'Download audio at 320kbps bitrate:'
 			post_facebook_message(sender_id, message_text)
-			filestat1 = post_facebook_file(sender_id, audiolink)
+			# filestat1 = post_facebook_file(sender_id, audiolink)
 
-			if 'Response [200]' not in (str(filestat1)):
-				r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
-				message_text = str(r.text)
-				post_facebook_message(sender_id, message_text)
+			# if 'Response [200]' not in (str(filestat1)):
+			r = requests.get('http://tinyurl.com/api-create.php?url=' + audiolink)
+			message_text = str(r.text)
+			post_facebook_message(sender_id, message_text)
 				
 		message_text = 'Download audio at ' + bestaudio.bitrate + 'bps bitrate:'
 		post_facebook_message(sender_id, message_text)
-		filestat2 = post_facebook_file(sender_id, bestaudio.url)
+		# filestat2 = post_facebook_file(sender_id, bestaudio.url)
 				
-		if 'Response [200]' not in (str(filestat2)):
-			r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
-			message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, ensure the file extension is .mp3!'
-			post_facebook_message(sender_id, message_text)
+		# if 'Response [200]' not in (str(filestat2)):
+		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
+		message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, ensure the file extension is .mp3!'
+		post_facebook_message(sender_id, message_text)
 
 	print '_'*20
 	print '\n'*2
