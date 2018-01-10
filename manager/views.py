@@ -79,15 +79,15 @@ def scraper2(uid):
 	print '\n'*2
 	print '_'*20
 
-	url = 'https://www.yt-download.org/grab?vidID=' + uid + '&format=mp3'
+	url = 'https://www.yt-download.org/@grab?vidID=' + uid + '&format=mp3&streams=mp3&api=button'
 	print '\n\nSecondary Scraper Up! Scraping:', url
 
 	headers = {
 		'accept' : 'text/html, */*; q=0.01',
 		'accept-encoding' : 'gzip, deflate, sdch, br',
 		'accept-language' : 'en-IN,en-GB;q=0.8,en-US;q=0.6,en;q=0.4',
-		'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; PHPSESSID=s15; _popfired=2; _ga=GA1.2.7205434.1487244483',
-		'referer' : 'https://www.yt-download.org/api-console/audio/' + uid,
+		'cookie' : '__cfduid=d5f48ffbb246c30eb1b77b9694df6950a1487244481; _ga=GA1.2.7205434.1487244483; _gid=GA1.2.452623598.1515582281; PHPSESSID=s1; _gat=1',
+		'referer' : 'https://www.yt-download.org/@api/button/mp3/' + uid,
 		'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36',
 		'x-requested-with' : 'XMLHttpRequest'
 	}
@@ -97,7 +97,7 @@ def scraper2(uid):
 	soup = soup.find('a')['href']
 	down_url = 'https:' + soup
 
-	print down_url
+	print down_url, 'READY FOR DOWNLOAD!'
 	print '\n\nSecondary Scraper Down!'
 	print '_'*20
 	print '\n'*2
@@ -159,15 +159,12 @@ def handle_quickreply(sender_id, payload):
 	url = payload.split('!$#@')[1]
 	try:
 		video = pafy.new(url)
-		print 'Successfully made pafy object'
 	except:
 		message_text = 'Please check the video URL!' + str(url)
-		print 'Pafy object not made ugh'
 		post_facebook_message(sender_id, message_text)
 		return
 
 	message_text = video.title + '\t(' + video.duration + ')'
-	print message_text, 'to be sent'
 	post_facebook_message(sender_id, message_text)
 	
 	if payload.split('!$#@')[0] == 'video':
@@ -194,7 +191,6 @@ def handle_quickreply(sender_id, payload):
 		bestaudio = video.getbestaudio(preftype='m4a')
 		print bestaudio.url
 
-		'''
 		post_facebook_audio(sender_id, bestaudio.url)
 		message_text = 'Download audio at 320kbps bitrate:'
 		post_facebook_message(sender_id, message_text)	
@@ -214,8 +210,6 @@ def handle_quickreply(sender_id, payload):
 				r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 				message_text = str(r.text) + '\n\nYou would need to rename this file after download. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
 				post_facebook_message(sender_id, message_text)
-		
-		'''
 
 		r = requests.get('http://tinyurl.com/api-create.php?url=' + bestaudio.url)
 		message_text = 'Download audio at ' + bestaudio.bitrate + 'bps bitrate:\n\n' + str(r.text) + '\n\nAfter downloading, you would need to rename this file. Importantly, append the ".' + bestaudio.extension + '" extension to the filename!'
